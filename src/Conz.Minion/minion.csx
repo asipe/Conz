@@ -6,9 +6,11 @@ var config =  new {
     Paths = new {
       RootDir = root,
       DebugDir = Path.Combine(root, "debug"),
+      SourceDir = Path.Combine(root, "src"),
       ThirdpartyDir = thirdparty,
       PackagesDir = Path.Combine(thirdparty, "packages"),
       NugetExePath = Path.Combine(thirdparty, @"nuget\nuget.exe"),
+      NugetWorkingDir = Path.Combine(root, "nugetworking")
     }
   };
   
@@ -51,6 +53,18 @@ void BuildAll() {
   Run(@"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe", @".\src\Conz.Build\Conz.proj /ds /maxcpucount:6");
 }
 
+void BuildNugetPackages() {
+  TryDelete(config.Paths.NugetWorkingDir);
+  
+  var dir = Path.Combine(config.Paths.NugetWorkingDir, @"Conz.Core\lib\net45");
+  Directory.CreateDirectory(dir);
+  File.Copy(Path.Combine(config.Paths.DebugDir, @"net-4.5\Conz.Core\Conz.Core.dll"),
+            Path.Combine(dir, "Conz.Core.dll")); 
+  File.Copy(Path.Combine(config.Paths.SourceDir, @"Conz.Nuget.Specs\Conz.Core.dll.nuspec"),
+            Path.Combine(config.Paths.NugetWorkingDir, @"Conz.Core\Conz.Core.dll.nuspec"));
+  Run(config.Paths.NugetExePath, @"pack .\nugetworking\Conz.Core\Conz.Core.dll.nuspec -OutputDirectory .\nugetworking\Conz.Core");
+}
+
 void ProcessCommands() {
   var exiting = false;
   
@@ -82,7 +96,10 @@ void ProcessCommands() {
             break;
           case ("build.all"):
             BuildAll();
-            break;        
+            break;  
+          case ("build.nuget.packages"):
+            BuildNugetPackages();
+            break;                  
           default: 
             Echo("Unknown Command");
             break;
