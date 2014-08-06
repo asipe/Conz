@@ -1,18 +1,14 @@
 using System.Diagnostics;
 
-var root = Directory.GetCurrentDirectory();
-var thirdparty = Path.Combine(root, "thirdparty");
-var config =  new {
-    Paths = new {
-      RootDir = root,
-      DebugDir = Path.Combine(root, "debug"),
-      SourceDir = Path.Combine(root, "src"),
-      ThirdpartyDir = thirdparty,
-      PackagesDir = Path.Combine(thirdparty, "packages"),
-      NugetExePath = Path.Combine(thirdparty, @"nuget\nuget.exe"),
-      NugetWorkingDir = Path.Combine(root, "nugetworking")
-    }
-  };
+var config = Require<FitterBuilder>().Build(new {
+  RootDir = Directory.GetCurrentDirectory(),
+  DebugDir = @"<rootdir>\debug",
+  SourceDir = @"<rootdir>\src",
+  ThirdpartyDir = @"<rootdir>\thirdparty",
+  PackagesDir = @"<thirdpartydir>\packages",
+  NugetExePath = @"<thirdpartydir>\nuget\nuget.exe",
+  NunitConsoleExePath = @"<thirdpartydir>\packages\common\Nunit.Runners\tools\nunit-console.exe"
+});
   
 void TryDelete(string dir) {
   if (Directory.Exists(dir))
@@ -20,12 +16,12 @@ void TryDelete(string dir) {
 }
 
 void Clean() {
-  TryDelete(config.Paths.DebugDir);
+  TryDelete(config["DebugDir"]);
 }
 
 void CleanAll() {
   Clean();
-  TryDelete(config.Paths.PackagesDir);
+  TryDelete(config["PackagesDir"]);
 }
 
 void Echo(string message) {
@@ -54,15 +50,15 @@ void BuildAll() {
 }
 
 void BuildNugetPackages() {
-  TryDelete(config.Paths.NugetWorkingDir);
+  TryDelete(config["NugetWorkingDir"]);
   
-  var dir = Path.Combine(config.Paths.NugetWorkingDir, @"Conz.Core\lib\net45");
+  var dir = Path.Combine(config["NugetWorkingDir"], @"Conz.Core\lib\net45");
   Directory.CreateDirectory(dir);
-  File.Copy(Path.Combine(config.Paths.DebugDir, @"net-4.5\Conz.Core\Conz.Core.dll"),
+  File.Copy(Path.Combine(config["DebugDir"], @"net-4.5\Conz.Core\Conz.Core.dll"),
             Path.Combine(dir, "Conz.Core.dll")); 
-  File.Copy(Path.Combine(config.Paths.SourceDir, @"Conz.Nuget.Specs\Conz.Core.dll.nuspec"),
-            Path.Combine(config.Paths.NugetWorkingDir, @"Conz.Core\Conz.Core.dll.nuspec"));
-  Run(config.Paths.NugetExePath, @"pack .\nugetworking\Conz.Core\Conz.Core.dll.nuspec -OutputDirectory .\nugetworking\Conz.Core");
+  File.Copy(Path.Combine(config["SourceDir"], @"Conz.Nuget.Specs\Conz.Core.dll.nuspec"),
+            Path.Combine(config["NugetWorkingDir"], @"Conz.Core\Conz.Core.dll.nuspec"));
+  Run(config["NugetExePath"], @"pack .\nugetworking\Conz.Core\Conz.Core.dll.nuspec -OutputDirectory .\nugetworking\Conz.Core");
 }
 
 void ProcessCommands() {
