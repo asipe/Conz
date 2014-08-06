@@ -10,6 +10,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Properties", "Conz.Pro
 		Conz.Properties\AssemblyInfo.cs = Conz.Properties\AssemblyInfo.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Nuget.Packages", "Conz.Nuget.Packages", "{3663682F-48A4-4DD0-A706-84F117A515A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{DDB725E3-84B9-4E5B-97F7-EA0CA23C2573}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Nuget.Packages\common\packages.config = Conz.Nuget.Packages\common\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net-4.5", "net-4.5", "{3E59659A-FC2B-4BD8-9B1C-83AAA78DA358}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Nuget.Packages\net-4.5\packages.config = Conz.Nuget.Packages\net-4.5\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Nuget.Specs", "Conz.Nuget.Specs", "{AD8FCE09-DFFB-4902-AA0E-F12807420CBC}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Nuget.Specs\Conz.Core.dll.nuspec = Conz.Nuget.Specs\Conz.Core.dll.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Minion", "Conz.Minion", "{C003173B-713C-4319-B19F-5132DDDA37D0}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Minion\minion.csx = Conz.Minion\minion.csx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +45,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DDB725E3-84B9-4E5B-97F7-EA0CA23C2573} = {3663682F-48A4-4DD0-A706-84F117A515A7}
+		{3E59659A-FC2B-4BD8-9B1C-83AAA78DA358} = {3663682F-48A4-4DD0-A706-84F117A515A7}
 	EndGlobalSection
 EndGlobal
