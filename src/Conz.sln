@@ -32,6 +32,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Minion", "Conz.Minion"
 		Conz.Minion\minion.csx = Conz.Minion\minion.csx
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Build", "Conz.Build", "{5D7ECF1B-FEDE-4FD4-9060-C5F1052F3027}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Build\Conz.proj = Conz.Build\Conz.proj
+		Conz.Build\Conz.props = Conz.Build\Conz.props
+		Conz.Build\Conz.targets = Conz.Build\Conz.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Core", "Conz.Core", "{78888EA0-8969-4219-A834-CBE73CC4618B}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Build\Conz.Core\Conz.Core.proj = Conz.Build\Conz.Core\Conz.Core.proj
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,5 +61,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DDB725E3-84B9-4E5B-97F7-EA0CA23C2573} = {3663682F-48A4-4DD0-A706-84F117A515A7}
 		{3E59659A-FC2B-4BD8-9B1C-83AAA78DA358} = {3663682F-48A4-4DD0-A706-84F117A515A7}
+		{78888EA0-8969-4219-A834-CBE73CC4618B} = {5D7ECF1B-FEDE-4FD4-9060-C5F1052F3027}
 	EndGlobalSection
 EndGlobal
