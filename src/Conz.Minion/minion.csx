@@ -30,7 +30,8 @@ void Echo(string message) {
 }
 
 void Bootstrap() {
-  Echo("NOT YET IMPLEMENTED");
+  Run(config["NugetExePath"], @"install .\src\Conz.Nuget.Packages\common\packages.config -OutputDirectory .\thirdparty\packages\common -ExcludeVersion");
+  Run(config["NugetExePath"], @"install .\src\Conz.Nuget.Packages\net-4.5\packages.config -OutputDirectory .\thirdparty\packages\net-4.5 -ExcludeVersion");
 }
 
 void Run(string exePath, string args) {
