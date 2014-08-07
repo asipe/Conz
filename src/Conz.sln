@@ -44,6 +44,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Core", "Conz.Core", "{
 		Conz.Build\Conz.Core\Conz.Core.proj = Conz.Build\Conz.Core\Conz.Core.proj
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conz.UnitTests", "Conz.UnitTests\Conz.UnitTests.csproj", "{A921F08E-EBD6-4F77-90D8-16F9A8414EAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.UnitTests", "Conz.UnitTests", "{718DFD54-9180-4535-A8C6-F239A9775960}"
+	ProjectSection(SolutionItems) = preProject
+		Conz.Build\Conz.UnitTests\Conz.UnitTests.proj = Conz.Build\Conz.UnitTests\Conz.UnitTests.proj
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +61,10 @@ Global
 		{A0494F3F-D367-433E-ACE6-A61B2D1D773B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0494F3F-D367-433E-ACE6-A61B2D1D773B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0494F3F-D367-433E-ACE6-A61B2D1D773B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A921F08E-EBD6-4F77-90D8-16F9A8414EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A921F08E-EBD6-4F77-90D8-16F9A8414EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A921F08E-EBD6-4F77-90D8-16F9A8414EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A921F08E-EBD6-4F77-90D8-16F9A8414EAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,5 +73,6 @@ Global
 		{DDB725E3-84B9-4E5B-97F7-EA0CA23C2573} = {3663682F-48A4-4DD0-A706-84F117A515A7}
 		{3E59659A-FC2B-4BD8-9B1C-83AAA78DA358} = {3663682F-48A4-4DD0-A706-84F117A515A7}
 		{78888EA0-8969-4219-A834-CBE73CC4618B} = {5D7ECF1B-FEDE-4FD4-9060-C5F1052F3027}
+		{718DFD54-9180-4535-A8C6-F239A9775960} = {5D7ECF1B-FEDE-4FD4-9060-C5F1052F3027}
 	EndGlobalSection
 EndGlobal

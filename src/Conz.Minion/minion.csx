@@ -62,6 +62,27 @@ void BuildNugetPackages() {
   Run(config["NugetExePath"], @"pack .\nugetworking\Conz.Core\Conz.Core.dll.nuspec -OutputDirectory .\nugetworking\Conz.Core");
 }
 
+void RunTests(string name, string assembly, string framework) {
+  Console.WriteLine("----------- {0} Tests {1} -----------", name, framework);
+  Console.WriteLine("-- {0}", assembly);
+  Run(config["NunitConsoleExePath"], string.Format(@"{0} /nologo /framework:{1}", assembly, framework));
+  Console.WriteLine("------------------------------------------");
+  Console.WriteLine();
+}
+
+void RunUnitTestsVS() {
+  RunTests("VS Unit", @".\src\Conz.UnitTests\bin\debug\Conz.UnitTests.dll", "net-4.5");
+}
+
+void RunUnitTestsDebug() {
+  RunTests("Debug Unit", Path.Combine(config["DebugDir"], @"net-4.5\Conz.UnitTests\Conz.UnitTests.dll"), "net-4.5");
+}
+
+void RunAllTests() {
+  RunUnitTestsVS();
+  RunUnitTestsDebug();
+}
+
 void ProcessCommands() {
   var exiting = false;
   
@@ -96,7 +117,16 @@ void ProcessCommands() {
             break;  
           case ("build.nuget.packages"):
             BuildNugetPackages();
-            break;                  
+            break;  
+          case ("run.unit.tests.vs"):
+            RunUnitTestsVS();
+            break;  
+          case ("run.unit.tests.debug"):
+            RunUnitTestsDebug();
+            break;           
+          case ("run.all.tests"):
+            RunAllTests();
+            break;                             
           default: 
             Echo("Unknown Command");
             break;
