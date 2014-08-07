@@ -41,6 +41,7 @@
     <Compile Include="ConsoleAbstraction\DotNetConsole.cs" />
     <Compile Include="ConsoleAbstraction\IConsole.cs" />
     <Compile Include="Conzole.cs" />
+    <Compile Include="ConzoleConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
