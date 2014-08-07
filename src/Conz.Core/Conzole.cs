@@ -3,18 +3,13 @@
 namespace Conz.Core {
   public class Conzole {
     public Conzole(IConsole console, ConzoleConfig config) {
-      mConsole = console;
-      mConfig = config;
+      mColoredAction = new ColoredAction(console, config.ForegroundColor);
     }
 
     public void WriteLine(string value) {
-      var original = mConsole.ForegroundColor;
-      mConsole.ForegroundColor = mConfig.ForegroundColor;
-      mConsole.WriteLine(value);
-      mConsole.ForegroundColor = original;
+      mColoredAction.Execute(c => c.WriteLine(value));
     }
 
-    private readonly IConsole mConsole;
-    private readonly ConzoleConfig mConfig;
+    private readonly ColoredAction mColoredAction;
   }
 }
