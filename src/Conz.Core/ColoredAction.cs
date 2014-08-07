@@ -2,7 +2,7 @@
 using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
-  public class ColoredAction {
+  public class ColoredAction : IColoredAction {
     public ColoredAction(IConsole console, ConsoleColor foregroundColor, ConsoleColor backgroundColor) {
       mConsole = console;
       mForegroundColor = foregroundColor;
