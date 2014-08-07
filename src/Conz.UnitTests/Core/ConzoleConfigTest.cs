@@ -9,6 +9,7 @@ namespace Conz.UnitTests.Core {
     public void TestDefaults() {
       var config = new ConzoleConfig();
       Assert.That(config.ForegroundColor, Is.EqualTo(ConsoleColor.Black));
+      Assert.That(config.BackgroundColor, Is.EqualTo(ConsoleColor.Black));
     } 
   }
 }

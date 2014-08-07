@@ -1,9 +1,7 @@
-﻿using Conz.Core.ConsoleAbstraction;
-
-namespace Conz.Core {
+﻿namespace Conz.Core {
   public class Conzole {
-    public Conzole(IConsole console, ConzoleConfig config) {
-      mColoredAction = new ColoredAction(console, config.ForegroundColor);
+    public Conzole(ConzoleConfig config) {
+      mColoredAction = new ColoredAction(config.Console, config.ForegroundColor, config.BackgroundColor);
     }
 
     public void WriteLine(string value) {

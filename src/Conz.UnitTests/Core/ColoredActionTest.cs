@@ -10,8 +10,11 @@ namespace Conz.UnitTests.Core {
     [Test]
     public void TestSuccessfulAction() {
       mConsole.Setup(c => c.ForegroundColor).Returns(ConsoleColor.Green);
+      mConsole.Setup(c => c.BackgroundColor).Returns(ConsoleColor.White);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Red);
+      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Yellow);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Green);
+      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.White);
       IConsole console = null;
       mAction.Execute(c => console = c);
       Assert.That(console, Is.EqualTo(mConsole.Object));
@@ -20,8 +23,11 @@ namespace Conz.UnitTests.Core {
     [Test]
     public void TestActionThrowsStillResetsColor() {
       mConsole.Setup(c => c.ForegroundColor).Returns(ConsoleColor.Green);
+      mConsole.Setup(c => c.BackgroundColor).Returns(ConsoleColor.White);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Red);
+      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Yellow);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Green);
+      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.White);
       IConsole console = null;
       var ex = Assert.Throws<Exception>(() => mAction.Execute(c => {
                                                                 console = c;
@@ -34,7 +40,7 @@ namespace Conz.UnitTests.Core {
     [SetUp]
     public void DoSetup() {
       mConsole = Mok<IConsole>();
-      mAction = new ColoredAction(mConsole.Object, ConsoleColor.Red);
+      mAction = new ColoredAction(mConsole.Object, ConsoleColor.Red, ConsoleColor.Yellow);
     }
 
     private Mock<IConsole> mConsole;
