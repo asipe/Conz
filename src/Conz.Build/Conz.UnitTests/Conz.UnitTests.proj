@@ -17,6 +17,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="$(DebugDir)\Conz.Core\Conz.Core.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />  
+    <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />  
   </ItemGroup>    
 
   <ItemGroup>
