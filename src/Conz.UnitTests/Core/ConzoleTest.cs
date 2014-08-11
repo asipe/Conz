@@ -9,7 +9,6 @@ namespace Conz.UnitTests.Core {
   public class ConzoleTest : BaseTestCase {
     [Test]
     public void TestWriteLineUsage() {
-      InitConzole();
       mConsole.SetupGet(c => c.ForegroundColor).Returns(ConsoleColor.Red);
       mConsole.SetupGet(c => c.BackgroundColor).Returns(ConsoleColor.Green);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.White);
@@ -23,11 +22,8 @@ namespace Conz.UnitTests.Core {
     [SetUp]
     public void DoSetup() {
       mConsole = Mok<IConsole>();
-      mStyleSheet = new StyleSheet(new Style("", ConsoleColor.Yellow, ConsoleColor.White), null);
-      mConzole = null;
-    }
-
-    private void InitConzole() {
+      mStyleSheet = new StyleSheet(new Style("default", ConsoleColor.Yellow, ConsoleColor.White), 
+                                   BA(new Style("blackonblue", ConsoleColor.Blue, ConsoleColor.Black)));
       mConzole = new Conzole(mConsole.Object, mStyleSheet);
     }
 

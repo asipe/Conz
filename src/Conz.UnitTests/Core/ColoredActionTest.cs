@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Conz.Core;
 using Conz.Core.ConsoleAbstraction;
 using Moq;
@@ -7,12 +8,13 @@ using NUnit.Framework;
 namespace Conz.UnitTests.Core {
   [TestFixture]
   public class ColoredActionTest : BaseTestCase {
-    [Test]
-    public void TestSuccessfulAction() {
+    [TestCaseSource("GetActionTests")]
+    public void TestSuccessfulAction(Style @default, Style current, ConsoleColor expectedBackground, ConsoleColor expectedForeground) {
+      InitAction(@default, current);
       mConsole.Setup(c => c.ForegroundColor).Returns(ConsoleColor.Green);
       mConsole.Setup(c => c.BackgroundColor).Returns(ConsoleColor.White);
-      mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Red);
-      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Yellow);
+      mConsole.SetupSet(c => c.ForegroundColor = expectedForeground);
+      mConsole.SetupSet(c => c.BackgroundColor = expectedBackground);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Green);
       mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.White);
       IConsole console = null;
@@ -20,12 +22,13 @@ namespace Conz.UnitTests.Core {
       Assert.That(console, Is.EqualTo(mConsole.Object));
     }
 
-    [Test]
-    public void TestActionThrowsStillResetsColor() {
+    [TestCaseSource("GetActionTests")]
+    public void TestActionThrowsStillResetsColor(Style @default, Style current, ConsoleColor expectedBackground, ConsoleColor expectedForeground) {
+      InitAction(@default, current);
       mConsole.Setup(c => c.ForegroundColor).Returns(ConsoleColor.Green);
       mConsole.Setup(c => c.BackgroundColor).Returns(ConsoleColor.White);
-      mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Red);
-      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Yellow);
+      mConsole.SetupSet(c => c.ForegroundColor = expectedForeground);
+      mConsole.SetupSet(c => c.BackgroundColor = expectedBackground);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Green);
       mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.White);
       IConsole console = null;
@@ -40,7 +43,67 @@ namespace Conz.UnitTests.Core {
     [SetUp]
     public void DoSetup() {
       mConsole = Mok<IConsole>();
-      mAction = new ColoredAction(mConsole.Object, ConsoleColor.Red, ConsoleColor.Yellow);
+      mAction = null;
+    }
+
+    private static IEnumerable GetActionTests() {
+      yield return new TestCaseData(new Style("", ConsoleColor.Yellow, ConsoleColor.Red),
+                                    null,
+                                    ConsoleColor.Yellow,
+                                    ConsoleColor.Red)
+        .SetName("TestExecuteWithNullCurrentStyleUsesDefaultStyle");
+
+      yield return new TestCaseData(new Style("", ConsoleColor.Yellow, ConsoleColor.Red),
+                                    new Style("", null, null),
+                                    ConsoleColor.Yellow,
+                                    ConsoleColor.Red)
+        .SetName("TestExecuteWithCurrentStyleWithNullColorAndBackgroundUsesDefaultStyle");
+
+      yield return new TestCaseData(new Style("", ConsoleColor.Yellow, ConsoleColor.Red),
+                                    new Style("", ConsoleColor.DarkRed, ConsoleColor.DarkYellow),
+                                    ConsoleColor.DarkRed,
+                                    ConsoleColor.DarkYellow)
+        .SetName("TestExecuteWithCurrentStyleDefinedUsesCurrentStyle");
+
+      yield return new TestCaseData(new Style("", ConsoleColor.Yellow, ConsoleColor.Red),
+                                    new Style("", null, ConsoleColor.DarkYellow),
+                                    ConsoleColor.Yellow,
+                                    ConsoleColor.DarkYellow)
+        .SetName("TestExecuteWithCurrentWithNoBackgroundUsesDefaultBackground");
+
+      yield return new TestCaseData(new Style("", ConsoleColor.Yellow, ConsoleColor.Red),
+                                    new Style("", ConsoleColor.DarkRed, null),
+                                    ConsoleColor.DarkRed,
+                                    ConsoleColor.Red)
+        .SetName("TestExecuteWithCurrentWithNoColorUsesDefaultColor");
+
+      yield return new TestCaseData(null,
+                                    new Style("", ConsoleColor.DarkRed, ConsoleColor.DarkYellow),
+                                    ConsoleColor.DarkRed,
+                                    ConsoleColor.DarkYellow)
+        .SetName("TestExecuteWithCurrentStyleDefinedAndNullDefaultUsesCurrentStyle");
+
+      yield return new TestCaseData(new Style("", null, null),
+                                    new Style("", ConsoleColor.DarkRed, ConsoleColor.DarkYellow),
+                                    ConsoleColor.DarkRed,
+                                    ConsoleColor.DarkYellow)
+        .SetName("TestExecuteWithCurrentStyleDefinedAndNullDefaultValuesUsesCurrentStyle");
+
+      yield return new TestCaseData(null,
+                                    null,
+                                    ConsoleColor.White,
+                                    ConsoleColor.Green)
+        .SetName("TestExecuteWithBothDefaultAndCurrentNullUseCurrentConsoleValues");
+
+      yield return new TestCaseData(new Style("", null, null),
+                                    new Style("", null, null),
+                                    ConsoleColor.White,
+                                    ConsoleColor.Green)
+        .SetName("TestExecuteWithBothDefaultAndCurrentHaveNullValuesUseCurrentConsoleValues");
+    }
+
+    private void InitAction(Style @default, Style current) {
+      mAction = new ColoredAction(mConsole.Object, @default, current);
     }
 
     private Mock<IConsole> mConsole;

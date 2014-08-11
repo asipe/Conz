@@ -3,17 +3,17 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public class ColoredAction : IColoredAction {
-    public ColoredAction(IConsole console, ConsoleColor foregroundColor, ConsoleColor backgroundColor) {
+    public ColoredAction(IConsole console, Style defaultStyle, Style currentStyle) {
       mConsole = console;
-      mForegroundColor = foregroundColor;
-      mBackgroundColor = backgroundColor;
+      mDefaultstyle = defaultStyle ?? _EmptyStyle;
+      mCurrentStyle = currentStyle ?? _EmptyStyle;
     }
 
     public void Execute(Action<IConsole> action) {
       var originalForegroundColor = mConsole.ForegroundColor;
       var originalBackgroundColor = mConsole.BackgroundColor;
-      mConsole.ForegroundColor = mForegroundColor;
-      mConsole.BackgroundColor = mBackgroundColor;
+      mConsole.ForegroundColor = GetCurrentColor(mCurrentStyle.Color, mDefaultstyle.Color, originalForegroundColor);
+      mConsole.BackgroundColor = GetCurrentColor(mCurrentStyle.BackgroundColor, mDefaultstyle.BackgroundColor, originalBackgroundColor);
       try {
         action.Invoke(mConsole);
       } finally {
@@ -22,8 +22,19 @@ namespace Conz.Core {
       }
     }
 
+    private static ConsoleColor GetCurrentColor(ConsoleColor? currentStyleColor,
+                                                ConsoleColor? defaultStyleColor,
+                                                ConsoleColor currentConsoleColor) {
+      return currentStyleColor.HasValue
+               ? currentStyleColor.Value
+               : defaultStyleColor.HasValue
+                   ? defaultStyleColor.Value
+                   : currentConsoleColor;
+    }
+
+    private static readonly Style _EmptyStyle = new Style("", null, null);
     private readonly IConsole mConsole;
-    private readonly ConsoleColor mForegroundColor;
-    private readonly ConsoleColor mBackgroundColor;
+    private readonly Style mCurrentStyle;
+    private readonly Style mDefaultstyle;
   }
 }

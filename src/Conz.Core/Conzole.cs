@@ -3,7 +3,7 @@
 namespace Conz.Core {
   public class Conzole {
     public Conzole(IConsole console, StyleSheet styleSheet) {
-      mColoredAction = new ColoredAction(console, styleSheet.Default.Color.Value, styleSheet.Default.BackgroundColor.Value);
+      mColoredAction = new ColoredAction(console, styleSheet.Default, null);
     }
 
     public void WriteLine(string value) {
