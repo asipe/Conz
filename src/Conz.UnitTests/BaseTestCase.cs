@@ -1,5 +1,7 @@
-﻿using Moq;
+﻿using System.Linq;
+using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
 
 namespace Conz.UnitTests {
   [TestFixture]
@@ -7,6 +9,7 @@ namespace Conz.UnitTests {
     [SetUp]
     public void BaseSetup() {
       MokFac = new MockRepository(MockBehavior.Strict);
+      ObjectFixture = new Fixture();
     }
 
     [TearDown]
@@ -22,10 +25,23 @@ namespace Conz.UnitTests {
       return items;
     }
 
+    protected T CA<T>() {
+      return ObjectFixture.Create<T>();
+    }
+
+    protected T[] CM<T>(int count) {
+      return (count == 0)
+               ? BA<T>()
+               : ObjectFixture
+                   .CreateMany<T>(count)
+                   .ToArray();
+    }
+
     private void VerifyMocks() {
       MokFac.VerifyAll();
     }
 
     protected MockRepository MokFac{get;private set;}
+    protected Fixture ObjectFixture{get;private set;}
   }
 }
