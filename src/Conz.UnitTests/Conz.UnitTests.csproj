@@ -45,8 +45,9 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Core\ColoredActionTest.cs" />
-    <Compile Include="Core\ConzoleConfigTest.cs" />
     <Compile Include="Core\ConzoleTest.cs" />
+    <Compile Include="Core\StyleSheetTest.cs" />
+    <Compile Include="Core\StyleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseTestCase.cs" />
   </ItemGroup>

@@ -23,20 +23,18 @@ namespace Conz.UnitTests.Core {
     [SetUp]
     public void DoSetup() {
       mConsole = Mok<IConsole>();
-      mConfig = new ConzoleConfig {
-                                    ForegroundColor = ConsoleColor.White,
-                                    BackgroundColor = ConsoleColor.Yellow,
-                                    Console = mConsole.Object
-                                  };
+      mStyleSheet = new StyleSheet {
+                                     Default = new Style("", ConsoleColor.Yellow, ConsoleColor.White)
+                                   };
       mConzole = null;
     }
 
     private void InitConzole() {
-      mConzole = new Conzole(mConfig);
+      mConzole = new Conzole(mConsole.Object, mStyleSheet);
     }
 
     private Mock<IConsole> mConsole;
-    private ConzoleConfig mConfig;
     private Conzole mConzole;
+    private StyleSheet mStyleSheet;
   }
 }

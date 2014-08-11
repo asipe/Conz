@@ -14,8 +14,6 @@ namespace Conz.Samples {
     }
 
     private static void DoWork() {
-      var console = new DotNetConsole();
-
       var colors = Enum
         .GetValues(typeof(ConsoleColor))
         .Cast<ConsoleColor>()
@@ -26,11 +24,9 @@ namespace Conz.Samples {
         .ToArray();
 
       var conzoles = colors
-        .Select((color, x) => new Conzole(new ConzoleConfig {
-                                                              Console = console,
-                                                              ForegroundColor = color,
-                                                              BackgroundColor = reversedColors[x]
-                                                            }))
+        .Select((color, x) => new Conzole(new DotNetConsole(), new StyleSheet {
+                                                                                Default = new Style(x.ToString(), reversedColors[x], color)
+                                                                              }))
         .ToArray();
 
       Array.ForEach(conzoles, con => con.WriteLine("Hello World"));
