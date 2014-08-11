@@ -23,9 +23,7 @@ namespace Conz.UnitTests.Core {
     [SetUp]
     public void DoSetup() {
       mConsole = Mok<IConsole>();
-      mStyleSheet = new StyleSheet {
-                                     Default = new Style("", ConsoleColor.Yellow, ConsoleColor.White)
-                                   };
+      mStyleSheet = new StyleSheet(new Style("", ConsoleColor.Yellow, ConsoleColor.White), null);
       mConzole = null;
     }
 
