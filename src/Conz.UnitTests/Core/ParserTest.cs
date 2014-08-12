@@ -1,4 +1,5 @@
-﻿using Conz.Core;
+﻿using System.Collections;
+using Conz.Core;
 using NUnit.Framework;
 
 namespace Conz.UnitTests.Core {
@@ -24,17 +25,20 @@ namespace Conz.UnitTests.Core {
       Assert.That(actual[0].Text, Is.EqualTo(text));
     }
 
-    [Test]
-    public void TestParseWithTextStyled() {
-      var actual = mParser.Parse("|a|hello world|");
-      Assert.That(actual.Length, Is.EqualTo(1));
-      Assert.That(actual[0].Style, Is.EqualTo("a"));
-      Assert.That(actual[0].Text, Is.EqualTo("hello world"));      
+    [TestCaseSource("GetParseTests")]
+    public void TestParseWithTextStyled(string text, Segment[] expected) {
+      AssertAreEqual(mParser.Parse(text), expected);
     }
 
     [SetUp]
     public void DoSetup() {
       mParser = new Parser();
+    }
+
+    private IEnumerable GetParseTests() {
+      yield return new TestCaseData("|a|hello world|", BA(new Segment("a", "hello world")));
+      yield return new TestCaseData("|a|hello world||a|hello world|", BA(new Segment("a", "hello world"),
+                                                                         new Segment("a", "hello world")));
     }
 
     private Parser mParser;
