@@ -33,6 +33,25 @@ namespace Conz.UnitTests.Core {
       yield return new TestCaseData("|a|hello world|zzz|b|goodbye world|", BA(new Segment("a", "hello world"),
                                                                               new Segment(null, "zzz"),
                                                                               new Segment("b", "goodbye world")));
+      yield return new TestCaseData("   >|error|msg 33|  ", BA(new Segment(null, "   >"),
+                                                               new Segment("error", "msg 33"),
+                                                               new Segment(null, "  ")));
+      yield return new TestCaseData("|a|1|\r\n|a|1|\r\n|a|1|\r\n|a|1|\r\n|a|1|\r\n", BA(new Segment("a", "1"),
+                                                                                        new Segment(null, "\r\n"),
+                                                                                        new Segment("a", "1"),
+                                                                                        new Segment(null, "\r\n"),
+                                                                                        new Segment("a", "1"),
+                                                                                        new Segment(null, "\r\n"),
+                                                                                        new Segment("a", "1"),
+                                                                                        new Segment(null, "\r\n"),
+                                                                                        new Segment("a", "1"),
+                                                                                        new Segment(null, "\r\n")));
+      yield return new TestCaseData("||hello world|", BA(new Segment(null, "hello world")));
+      yield return new TestCaseData("|a||", BA(new Segment("a", null)));
+      yield return new TestCaseData("|a|||a||", BA(new Segment("a", null),
+                                                   new Segment("a", null)));
+      yield return new TestCaseData("|||", BA<Segment>());
+      yield return new TestCaseData("|||||||||", BA<Segment>());
     }
 
     private Parser mParser;

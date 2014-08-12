@@ -36,7 +36,8 @@ namespace Conz.Core {
                 buffer.CollectText();
                 break;
               default:
-                yield return buffer.BuildSegment();
+                if (buffer.CanBuildSegment)
+                  yield return buffer.BuildSegment();
                 state = CollectingState.CsNone;
                 break;
             }
