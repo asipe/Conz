@@ -53,6 +53,7 @@
     <Compile Include="Core\ColoredActionTest.cs" />
     <Compile Include="Core\ConzoleTest.cs" />
     <Compile Include="Core\ParserTest.cs" />
+    <Compile Include="Core\SegmentBufferTest.cs" />
     <Compile Include="Core\SegmentTest.cs" />
     <Compile Include="Core\StyleSheetTest.cs" />
     <Compile Include="Core\StyleTest.cs" />

@@ -37,8 +37,14 @@ namespace Conz.UnitTests.Core {
 
     private IEnumerable GetParseTests() {
       yield return new TestCaseData("|a|hello world|", BA(new Segment("a", "hello world")));
-      yield return new TestCaseData("|a|hello world||a|hello world|", BA(new Segment("a", "hello world"),
-                                                                         new Segment("a", "hello world")));
+      yield return new TestCaseData("|a|hello world||b|goodbye world|", BA(new Segment("a", "hello world"),
+                                                                           new Segment("b", "goodbye world")));
+      yield return new TestCaseData("|a|hello world| |b|goodbye world|", BA(new Segment("a", "hello world"),
+                                                                            new Segment(null, " "),
+                                                                            new Segment("b", "goodbye world")));
+      yield return new TestCaseData("|a|hello world|zzz|b|goodbye world|", BA(new Segment("a", "hello world"),
+                                                                              new Segment(null, "zzz"),
+                                                                              new Segment("b", "goodbye world")));
     }
 
     private Parser mParser;

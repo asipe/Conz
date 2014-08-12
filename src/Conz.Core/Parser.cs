@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Conz.Core {
   public class Parser {
@@ -12,54 +11,43 @@ namespace Conz.Core {
 
     public Segment[] Parse(string text) {
       if (text == "")
-        return new[] { new Segment(null, "") };
+        return new[] {new Segment(null, "")};
       return text == null
-               ? new[] { new Segment(null, "") }
+               ? new[] {new Segment(null, "")}
                : ParseText(text).ToArray();
     }
 
     private static IEnumerable<Segment> ParseText(string text) {
-      var buf = new StringBuilder();
-      var bufSet = false;
-      var style = new StringBuilder();
-      var styleSet = false;
+      var buffer = new SegmentBuffer();
       var state = CollectingState.CsNone;
-      StringBuilder collector = null;
 
       foreach (var c in text)
         switch (c) {
           case '|':
             switch (state) {
               case CollectingState.CsNone:
+                if (buffer.CanBuildSegment)
+                  yield return buffer.BuildSegment();
                 state = CollectingState.CsStyle;
-                collector = style;
-                styleSet = true;
+                buffer.CollectStyle();
                 break;
               case CollectingState.CsStyle:
                 state = CollectingState.CsText;
-                collector = buf;
-                bufSet = true;
+                buffer.CollectText();
                 break;
               default:
+                yield return buffer.BuildSegment();
                 state = CollectingState.CsNone;
-                collector = null;
-                yield return new Segment(style.ToString(), buf.ToString());
-                style.Clear();
-                buf.Clear();
-                styleSet = false;
-                bufSet = false;
                 break;
             }
             break;
           default:
-            var sb = collector ?? buf;
-            sb.Append(c);
-            bufSet = bufSet || ReferenceEquals(sb, buf);
+            buffer.Add(c);
             break;
         }
 
-      if (styleSet || bufSet)
-        yield return new Segment(styleSet ? style.ToString() : null, bufSet ? buf.ToString() : null);
+      if (buffer.CanBuildSegment)
+        yield return buffer.BuildSegment();
     }
   }
 }

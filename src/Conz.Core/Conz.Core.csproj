@@ -46,6 +46,7 @@
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Segment.cs" />
+    <Compile Include="SegmentBuffer.cs" />
     <Compile Include="Style.cs" />
     <Compile Include="StyleSheet.cs" />
   </ItemGroup>
