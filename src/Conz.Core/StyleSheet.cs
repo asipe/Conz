@@ -1,11 +1,11 @@
 ﻿namespace Conz.Core {
   public class StyleSheet {
-    public StyleSheet(Style @default, Style[] styles) {
+    public StyleSheet(Class @default, Class[] classes) {
       Default = @default;
-      Styles = styles;
+      Classes = classes;
     }
 
-    public Style Default{get;private set;}
-    public Style[] Styles{get;private set;}
+    public Class Default{get;private set;}
+    public Class[] Classes{get;private set;}
   }
 }

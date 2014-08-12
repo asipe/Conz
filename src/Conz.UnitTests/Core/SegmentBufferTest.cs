@@ -39,7 +39,7 @@ namespace Conz.UnitTests.Core {
     [Test]
     public void TestAddingStyleAllowsSegmentToBeBuilt() {
       mBuffer
-        .CollectStyle()
+        .CollectClass()
         .Add('a');
       Assert.That(mBuffer.CanBuildSegment, Is.True);
     }
@@ -48,7 +48,7 @@ namespace Conz.UnitTests.Core {
     public void TestBuildingSegmentResetsToText() {
       mBuffer
         .Add('t')
-        .CollectStyle()
+        .CollectClass()
         .Add('c');
       AssertAreEqual(mBuffer.BuildSegment(), new Segment("c", "t"));
       mBuffer
@@ -59,14 +59,14 @@ namespace Conz.UnitTests.Core {
     [Test]
     public void TestUsage() {
       mBuffer
-        .CollectStyle()
+        .CollectClass()
         .Add('a')
         .Add('b')
         .Add('c');
       Assert.That(mBuffer.CanBuildSegment, Is.True);
       AssertAreEqual(mBuffer.BuildSegment(), new Segment("abc", null));
       mBuffer
-        .CollectStyle()
+        .CollectClass()
         .Add('s')
         .CollectText()
         .Add('t');

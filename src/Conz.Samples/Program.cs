@@ -24,7 +24,7 @@ namespace Conz.Samples {
         .ToArray();
 
       var conzoles = colors
-        .Select((color, x) => new Conzole(new DotNetConsole(), new StyleSheet(new Style(x.ToString(), reversedColors[x], color), null)))
+        .Select((color, x) => new Conzole(new DotNetConsole(), new StyleSheet(new Class(x.ToString(), reversedColors[x], color), null)))
         .ToArray();
 
       Array.ForEach(conzoles, con => con.WriteLine("Hello World"));

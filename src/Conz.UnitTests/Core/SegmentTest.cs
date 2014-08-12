@@ -7,7 +7,7 @@ namespace Conz.UnitTests.Core {
     [Test]
     public void TestDefaults() {
       var segment = new Segment("style", "text");
-      Assert.That(segment.Style, Is.EqualTo("style"));
+      Assert.That(segment.Class, Is.EqualTo("style"));
       Assert.That(segment.Text, Is.EqualTo("text"));
     }
 

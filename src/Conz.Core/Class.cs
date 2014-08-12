@@ -1,8 +1,8 @@
 ﻿using System;
 
 namespace Conz.Core {
-  public class Style {
-    public Style(string name, ConsoleColor? backgroundColor, ConsoleColor? color) {
+  public class Class {
+    public Class(string name, ConsoleColor? backgroundColor, ConsoleColor? color) {
       Name = name;
       BackgroundColor = backgroundColor;
       Color = color;

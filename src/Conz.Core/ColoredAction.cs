@@ -3,17 +3,17 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public class ColoredAction : IColoredAction {
-    public ColoredAction(IConsole console, Style defaultStyle, Style currentStyle) {
+    public ColoredAction(IConsole console, Class defaultClass, Class currentClass) {
       mConsole = console;
-      mDefaultstyle = defaultStyle ?? _EmptyStyle;
-      mCurrentStyle = currentStyle ?? _EmptyStyle;
+      mDefaultClass = defaultClass ?? _EmptyClass;
+      mCurrentClass = currentClass ?? _EmptyClass;
     }
 
     public void Execute(Action<IConsole> action) {
       var originalForegroundColor = mConsole.ForegroundColor;
       var originalBackgroundColor = mConsole.BackgroundColor;
-      mConsole.ForegroundColor = GetCurrentColor(mCurrentStyle.Color, mDefaultstyle.Color, originalForegroundColor);
-      mConsole.BackgroundColor = GetCurrentColor(mCurrentStyle.BackgroundColor, mDefaultstyle.BackgroundColor, originalBackgroundColor);
+      mConsole.ForegroundColor = GetCurrentColor(mCurrentClass.Color, mDefaultClass.Color, originalForegroundColor);
+      mConsole.BackgroundColor = GetCurrentColor(mCurrentClass.BackgroundColor, mDefaultClass.BackgroundColor, originalBackgroundColor);
       try {
         action.Invoke(mConsole);
       } finally {
@@ -22,19 +22,19 @@ namespace Conz.Core {
       }
     }
 
-    private static ConsoleColor GetCurrentColor(ConsoleColor? currentStyleColor,
-                                                ConsoleColor? defaultStyleColor,
+    private static ConsoleColor GetCurrentColor(ConsoleColor? currentClassColor,
+                                                ConsoleColor? defaultClassColor,
                                                 ConsoleColor currentConsoleColor) {
-      return currentStyleColor.HasValue
-               ? currentStyleColor.Value
-               : defaultStyleColor.HasValue
-                   ? defaultStyleColor.Value
+      return currentClassColor.HasValue
+               ? currentClassColor.Value
+               : defaultClassColor.HasValue
+                   ? defaultClassColor.Value
                    : currentConsoleColor;
     }
 
-    private static readonly Style _EmptyStyle = new Style("", null, null);
+    private static readonly Class _EmptyClass = new Class("", null, null);
     private readonly IConsole mConsole;
-    private readonly Style mCurrentStyle;
-    private readonly Style mDefaultstyle;
+    private readonly Class mCurrentClass;
+    private readonly Class mDefaultClass;
   }
 }

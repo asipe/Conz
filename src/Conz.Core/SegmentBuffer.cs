@@ -8,21 +8,21 @@ namespace Conz.Core {
     }
 
     public bool CanBuildSegment {
-      get {return mStyleSet || mTextSet;}
+      get {return mClassSet || mTextSet;}
     }
 
     public Segment BuildSegment() {
       ValidateCanBuildSegment();
-      var result = new Segment(GetTextOrNull(mStyle, mStyleSet), GetTextOrNull(mText, mTextSet));
-      mStyle.Clear();
-      mStyleSet = false;
+      var result = new Segment(GetTextOrNull(mClass, mClassSet), GetTextOrNull(mText, mTextSet));
+      mClass.Clear();
+      mClassSet = false;
       mText.Clear();
       mTextSet = false;
       mCollector = AddText;
       return result;
     }
 
-    public SegmentBuffer CollectStyle() {
+    public SegmentBuffer CollectClass() {
       mCollector = AddStyle;
       return this;
     }
@@ -42,8 +42,8 @@ namespace Conz.Core {
     }
 
     private void AddStyle(char c) {
-      mStyleSet = true;
-      mStyle.Append(c);
+      mClassSet = true;
+      mClass.Append(c);
     }
 
     private void AddText(char c) {
@@ -56,10 +56,10 @@ namespace Conz.Core {
         throw new Exception("Cannot Build Segment");
     }
 
-    private readonly StringBuilder mStyle = new StringBuilder();
+    private readonly StringBuilder mClass = new StringBuilder();
     private readonly StringBuilder mText = new StringBuilder();
     private Action<char> mCollector;
-    private bool mStyleSet;
+    private bool mClassSet;
     private bool mTextSet;
   }
 }

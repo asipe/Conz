@@ -29,7 +29,7 @@ namespace Conz.Core {
                 if (buffer.CanBuildSegment)
                   yield return buffer.BuildSegment();
                 state = CollectingState.CsStyle;
-                buffer.CollectStyle();
+                buffer.CollectClass();
                 break;
               case CollectingState.CsStyle:
                 state = CollectingState.CsText;

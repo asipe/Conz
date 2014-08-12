@@ -6,11 +6,11 @@ namespace Conz.UnitTests.Core {
   public class StyleSheetTest : BaseTestCase {
     [Test]
     public void TestDefaults() {
-      var def = CA<Style>();
-      var styles = CM<Style>(3);
+      var def = CA<Class>();
+      var styles = CM<Class>(3);
       var sheet = new StyleSheet(def, styles);
       Assert.That(sheet.Default, Is.EqualTo(def));
-      Assert.That(sheet.Styles, Is.EqualTo(styles));
+      Assert.That(sheet.Classes, Is.EqualTo(styles));
     }
   }
 }
