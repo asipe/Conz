@@ -1,6 +1,6 @@
 ﻿namespace Conz.Core {
   public class StyleSheet {
-    public StyleSheet(Class @default, Class[] classes) {
+    public StyleSheet(Class @default, params Class[] classes) {
       Default = @default;
       Classes = classes;
     }
