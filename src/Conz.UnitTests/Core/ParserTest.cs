@@ -5,26 +5,6 @@ using NUnit.Framework;
 namespace Conz.UnitTests.Core {
   [TestFixture]
   public class ParserTest : BaseTestCase {
-    [Test]
-    public void TestParseNullGivesEmpty() {
-      var actual = mParser.Parse(null);
-      Assert.That(actual.Length, Is.EqualTo(1));
-      Assert.That(actual[0].Style, Is.Null);
-      Assert.That(actual[0].Text, Is.EqualTo(""));
-    }
-
-    [TestCase("")]
-    [TestCase(" ")]
-    [TestCase("abc")]
-    [TestCase("abc\r\n")]
-    [TestCase("abc\r\ndef")]
-    public void TestParseNothingStyled(string text) {
-      var actual = mParser.Parse(text);
-      Assert.That(actual.Length, Is.EqualTo(1));
-      Assert.That(actual[0].Style, Is.Null);
-      Assert.That(actual[0].Text, Is.EqualTo(text));
-    }
-
     [TestCaseSource("GetParseTests")]
     public void TestParseWithTextStyled(string text, Segment[] expected) {
       AssertAreEqual(mParser.Parse(text), expected);
@@ -36,6 +16,14 @@ namespace Conz.UnitTests.Core {
     }
 
     private IEnumerable GetParseTests() {
+      yield return new TestCaseData(null, BA(new Segment(null, "")));
+      yield return new TestCaseData("", BA(new Segment(null, "")));
+      yield return new TestCaseData(" ", BA(new Segment(null, " ")));
+      yield return new TestCaseData("  ", BA(new Segment(null, "  ")));
+      yield return new TestCaseData("a", BA(new Segment(null, "a")));
+      yield return new TestCaseData("abc", BA(new Segment(null, "abc")));
+      yield return new TestCaseData("abc\r\n", BA(new Segment(null, "abc\r\n")));
+      yield return new TestCaseData("abc\r\ndef", BA(new Segment(null, "abc\r\ndef")));
       yield return new TestCaseData("|a|hello world|", BA(new Segment("a", "hello world")));
       yield return new TestCaseData("|a|hello world||b|goodbye world|", BA(new Segment("a", "hello world"),
                                                                            new Segment("b", "goodbye world")));
