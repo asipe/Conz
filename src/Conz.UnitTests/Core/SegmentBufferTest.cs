@@ -15,7 +15,7 @@ namespace Conz.UnitTests.Core {
       var ex = Assert.Throws<Exception>(() => mBuffer.BuildSegment());
       Assert.That(ex.Message, Is.EqualTo("Cannot Build Segment"));
     }
-    
+
     [Test]
     public void TestBuildingSegmentResetsToNonBuildableState() {
       mBuffer.Add('a');

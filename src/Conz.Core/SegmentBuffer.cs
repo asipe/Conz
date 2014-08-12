@@ -58,8 +58,8 @@ namespace Conz.Core {
 
     private readonly StringBuilder mClass = new StringBuilder();
     private readonly StringBuilder mText = new StringBuilder();
-    private Action<char> mCollector;
     private bool mClassSet;
+    private Action<char> mCollector;
     private bool mTextSet;
   }
 }
