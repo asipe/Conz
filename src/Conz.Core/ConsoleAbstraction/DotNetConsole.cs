@@ -12,8 +12,16 @@ namespace Conz.Core.ConsoleAbstraction {
       set {Console.ForegroundColor = value;}
     }
 
+    public void WriteLine() {
+      Console.WriteLine();
+    }
+
     public void WriteLine(string value) {
       Console.WriteLine(value);
+    }
+
+    public void Write(string value) {
+      Console.Write(value);
     }
   }
 }
