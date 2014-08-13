@@ -2,7 +2,7 @@
 using System.Linq;
 
 namespace Conz.Core {
-  public class Parser {
+  public class Parser : IParser {
     private enum CollectingState {
       CsNone,
       CsStyle,
