@@ -10,11 +10,11 @@ namespace Conz.Core {
     };
 
     public Segment[] Parse(string text) {
-      if (text == "")
-        return new[] {new Segment(null, "")};
-      return text == null
-               ? new[] {new Segment(null, "")}
-               : ParseText(text).ToArray();
+      return (text == "")
+               ? _EmptySegment
+               : (text == null)
+                   ? _EmptySegment
+                   : ParseText(text).ToArray();
     }
 
     private static IEnumerable<Segment> ParseText(string text) {
@@ -50,5 +50,7 @@ namespace Conz.Core {
       if (buffer.CanBuildSegment)
         yield return buffer.BuildSegment();
     }
+
+    private static readonly Segment[] _EmptySegment = {new Segment(null, "")};
   }
 }
