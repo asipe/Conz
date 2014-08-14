@@ -39,11 +39,13 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ColoredAction.cs" />
+    <Compile Include="ColoredActionFactory.cs" />
     <Compile Include="ConsoleAbstraction\DotNetConsole.cs" />
     <Compile Include="ConsoleAbstraction\IConsole.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Conzole.cs" />
     <Compile Include="IColoredAction.cs" />
+    <Compile Include="IColoredActionFactory.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

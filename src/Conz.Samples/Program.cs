@@ -22,9 +22,9 @@ namespace Conz.Samples {
     }
 
     private static void DoFormatted() {
-      var conzole = new Conzole(new DotNetConsole(), new Parser(), new StyleSheet(new Class("default", ConsoleColor.Black, ConsoleColor.White),
-                                                                                  new Class("error", ConsoleColor.Red, ConsoleColor.Black),
-                                                                                  new Class("warning", ConsoleColor.Yellow, ConsoleColor.Red)));
+      var conzole = new Conzole(new DotNetConsole(), new Parser(), null, new StyleSheet(new Class("default", ConsoleColor.Black, ConsoleColor.White),
+                                                                                        new Class("error", ConsoleColor.Red, ConsoleColor.Black),
+                                                                                        new Class("warning", ConsoleColor.Yellow, ConsoleColor.Red)));
       conzole.WriteLine("This is default");
       conzole.WriteLine("|error|This is error|");
       conzole.WriteLine("|warning|This is warning|");
@@ -43,7 +43,7 @@ namespace Conz.Samples {
         .ToArray();
 
       var conzoles = colors
-        .Select((color, x) => new Conzole(new DotNetConsole(), new Parser(), new StyleSheet(new Class(x.ToString(), reversedColors[x], color), null)))
+        .Select((color, x) => new Conzole(new DotNetConsole(), new Parser(), null, new StyleSheet(new Class(x.ToString(), reversedColors[x], color), null)))
         .ToArray();
 
       Array.ForEach(conzoles, con => con.WriteLine("Hello World"));

@@ -7,33 +7,49 @@ using NUnit.Framework;
 namespace Conz.UnitTests.Core {
   [TestFixture]
   public class ConzoleTest : BaseTestCase {
+    private sealed class StubColoredAction : IColoredAction {
+      public StubColoredAction(IConsole console) {
+        mConsole = console;
+      }
+
+      public void Execute(Action<IConsole> action) {
+        action.Invoke(mConsole);
+      }
+
+      private readonly IConsole mConsole;
+    }
+
     [Test]
     public void TestWritelineWhenParserReturnsSingleEmptySegment() {
       var segments = BA(new Segment(null, "Hello World"));
       mParser.Setup(p => p.Parse("Hello World")).Returns(segments);
-      mConsole.SetupGet(c => c.ForegroundColor).Returns(ConsoleColor.Red);
-      mConsole.SetupGet(c => c.BackgroundColor).Returns(ConsoleColor.Green);
-      mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.White);
-      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Yellow);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, 
+                            It.Is<Class>(c => AreEqual(c, mStyleSheet.Default)),
+                            It.Is<Class>(c => AreEqual(c, mStyleSheet.Default))))
+        .Returns(mAction);
       mConsole.Setup(c => c.Write("Hello World"));
       mConsole.Setup(c => c.WriteLine());
-      mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Red);
-      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Green);
       mConzole.WriteLine("Hello World");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
     }
 
     [SetUp]
     public void DoSetup() {
       mConsole = Mok<IConsole>();
       mParser = Mok<IParser>();
+      mFactory = Mok<IColoredActionFactory>();
       mStyleSheet = new StyleSheet(new Class("default", ConsoleColor.Yellow, ConsoleColor.White),
                                    BA(new Class("blackonblue", ConsoleColor.Blue, ConsoleColor.Black)));
-      mConzole = new Conzole(mConsole.Object, mParser.Object, mStyleSheet);
+      mAction = new StubColoredAction(mConsole.Object);
+      mConzole = new Conzole(mConsole.Object, mParser.Object, mFactory.Object, mStyleSheet);
     }
 
     private Mock<IConsole> mConsole;
     private Conzole mConzole;
     private StyleSheet mStyleSheet;
     private Mock<IParser> mParser;
+    private Mock<IColoredActionFactory> mFactory;
+    private StubColoredAction mAction;
   }
 }

@@ -50,6 +50,7 @@
     <Compile Include="..\Conz.Properties\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\ColoredActionFactoryTest.cs" />
     <Compile Include="Core\ColoredActionTest.cs" />
     <Compile Include="Core\ConzoleTest.cs" />
     <Compile Include="Core\ParserTest.cs" />

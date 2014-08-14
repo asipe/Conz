@@ -4,10 +4,14 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public class Conzole {
-    public Conzole(IConsole console, IParser parser, StyleSheet styleSheet) {
+    public Conzole(IConsole console, 
+                   IParser parser, 
+                   IColoredActionFactory factory,
+                   StyleSheet styleSheet) {
       mMap = new StyleSheetMap(styleSheet);
       mConsole = console;
       mParser = parser;
+      mFactory = factory;
       mStyleSheet = styleSheet;
     }
 
@@ -24,7 +28,7 @@ namespace Conz.Core {
                                  segment.Text
                                })
         .Select(item => new {
-                              Action = new ColoredAction(mConsole, mStyleSheet.Default, item.Class),
+                              Action = mFactory.Build(mConsole, mStyleSheet.Default, item.Class),
                               item.Text
                             })
         .ToArray();
@@ -35,6 +39,7 @@ namespace Conz.Core {
     private readonly IConsole mConsole;
     private readonly StyleSheetMap mMap;
     private readonly IParser mParser;
+    private readonly IColoredActionFactory mFactory;
     private readonly StyleSheet mStyleSheet;
   }
 }
