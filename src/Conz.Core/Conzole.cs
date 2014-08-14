@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
@@ -23,19 +22,13 @@ namespace Conz.Core {
     }
 
     public void Write(string value) {
-      var work = mParser
-        .Parse(value)
-        .Select(segment => new {
-                                 Class = mMap[segment.Class],
-                                 segment.Text
-                               })
-        .Select(item => new {
-                              Action = mFactory.Build(mConsole, mStyleSheet.Default, item.Class),
-                              item.Text
-                            })
-        .ToArray();
+      Array.ForEach(mParser.Parse(value), DoWork);
+    }
 
-      Array.ForEach(work, w => w.Action.Execute(c => c.Write(w.Text)));
+    private void DoWork(Segment segment) {
+      mFactory
+        .Build(mConsole, mStyleSheet.Default, mMap[segment.Class])
+        .Execute(c => c.Write(segment.Text));
     }
 
     private readonly IConsole mConsole;
