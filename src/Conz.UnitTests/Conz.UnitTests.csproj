@@ -55,6 +55,7 @@
     <Compile Include="Core\ParserTest.cs" />
     <Compile Include="Core\SegmentBufferTest.cs" />
     <Compile Include="Core\SegmentTest.cs" />
+    <Compile Include="Core\StyleSheetMapTest.cs" />
     <Compile Include="Core\StyleSheetTest.cs" />
     <Compile Include="Core\ClassTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

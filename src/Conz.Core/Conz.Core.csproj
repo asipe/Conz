@@ -41,6 +41,7 @@
     <Compile Include="ColoredAction.cs" />
     <Compile Include="ConsoleAbstraction\DotNetConsole.cs" />
     <Compile Include="ConsoleAbstraction\IConsole.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Conzole.cs" />
     <Compile Include="IColoredAction.cs" />
     <Compile Include="IParser.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="SegmentBuffer.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="StyleSheet.cs" />
+    <Compile Include="StyleSheetMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

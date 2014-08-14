@@ -1,8 +1,8 @@
 ﻿namespace Conz.Core {
   public class StyleSheet {
     public StyleSheet(Class @default, params Class[] classes) {
-      Default = @default;
-      Classes = classes;
+      Default = @default ?? Constants._EmptyDefaultClass;
+      Classes = classes ?? Constants._EmptyClasses;
     }
 
     public Class Default{get;private set;}

@@ -5,8 +5,8 @@ namespace Conz.Core {
   public class ColoredAction : IColoredAction {
     public ColoredAction(IConsole console, Class defaultClass, Class currentClass) {
       mConsole = console;
-      mDefaultClass = defaultClass ?? _EmptyClass;
-      mCurrentClass = currentClass ?? _EmptyClass;
+      mDefaultClass = defaultClass ?? Constants._EmptyClass;
+      mCurrentClass = currentClass ?? Constants._EmptyClass;
     }
 
     public void Execute(Action<IConsole> action) {
@@ -32,7 +32,6 @@ namespace Conz.Core {
                    : currentConsoleColor;
     }
 
-    private static readonly Class _EmptyClass = new Class("", null, null);
     private readonly IConsole mConsole;
     private readonly Class mCurrentClass;
     private readonly Class mDefaultClass;
