@@ -4,6 +4,8 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public class Conzole {
+    public Conzole(StyleSheet styleSheet) : this(new DotNetConsole(), new Parser(), new ColoredActionFactory(), styleSheet) {}
+
     public Conzole(IConsole console,
                    IParser parser,
                    IColoredActionFactory factory,

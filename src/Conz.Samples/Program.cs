@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Conz.Core;
-using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Samples {
   internal class Program {
@@ -22,10 +21,7 @@ namespace Conz.Samples {
     }
 
     private static void DoFormatted() {
-      var conzole = new Conzole(new DotNetConsole(),
-                                new Parser(),
-                                new ColoredActionFactory(),
-                                new StyleSheet(new Class("default", ConsoleColor.Black, ConsoleColor.White),
+      var conzole = new Conzole(new StyleSheet(new Class("default", ConsoleColor.Black, ConsoleColor.White),
                                                new Class("error", ConsoleColor.Red, ConsoleColor.Black),
                                                new Class("warning", ConsoleColor.Yellow, ConsoleColor.Red)));
       conzole.WriteLine("This is default");
@@ -46,10 +42,7 @@ namespace Conz.Samples {
         .ToArray();
 
       var conzoles = colors
-        .Select((color, x) => new Conzole(new DotNetConsole(),
-                                          new Parser(),
-                                          new ColoredActionFactory(),
-                                          new StyleSheet(new Class(x.ToString(), reversedColors[x], color), null)))
+        .Select((color, x) => new Conzole(new StyleSheet(new Class(x.ToString(), reversedColors[x], color), null)))
         .ToArray();
 
       Array.ForEach(conzoles, con => con.WriteLine("Hello World"));
