@@ -19,7 +19,7 @@ namespace Conz.Core {
       }
     }
 
-    private readonly Dictionary<string, Class> mMap;
     private readonly Class mDefault;
+    private readonly Dictionary<string, Class> mMap;
   }
 }

@@ -4,8 +4,8 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public class Conzole {
-    public Conzole(IConsole console, 
-                   IParser parser, 
+    public Conzole(IConsole console,
+                   IParser parser,
                    IColoredActionFactory factory,
                    StyleSheet styleSheet) {
       mMap = new StyleSheetMap(styleSheet);
@@ -37,9 +37,9 @@ namespace Conz.Core {
     }
 
     private readonly IConsole mConsole;
+    private readonly IColoredActionFactory mFactory;
     private readonly StyleSheetMap mMap;
     private readonly IParser mParser;
-    private readonly IColoredActionFactory mFactory;
     private readonly StyleSheet mStyleSheet;
   }
 }
