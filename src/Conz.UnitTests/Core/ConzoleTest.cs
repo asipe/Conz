@@ -24,9 +24,7 @@ namespace Conz.UnitTests.Core {
       var segments = BA(new Segment(null, "Hello World"));
       mParser.Setup(p => p.Parse("Hello World")).Returns(segments);
       mFactory
-        .Setup(f => f.Build(mConsole.Object,
-                            It.Is<Class>(c => AreEqual(c, mStyleSheet.Default)),
-                            It.Is<Class>(c => AreEqual(c, mStyleSheet.Default))))
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
       mConsole.Setup(c => c.Write("Hello World"));
       mConsole.Setup(c => c.WriteLine());

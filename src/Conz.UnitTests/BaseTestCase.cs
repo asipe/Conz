@@ -47,6 +47,10 @@ namespace Conz.UnitTests {
       return DoCompare(actual, expected).AreEqual;
     }
 
+    protected static TValue IsEq<TValue>(TValue x) {
+      return Match.Create(value => AreEqual(value, x), () => It.IsAny<TValue>());
+    }
+
     private static ComparisonResult DoCompare(object actual, object expected) {
       return _ObjectComparer.Compare(actual, expected);
     }
