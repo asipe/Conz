@@ -126,7 +126,7 @@ void ProcessCommands() {
             break;           
           case ("run.all.tests"):
             RunAllTests();
-            break;                             
+            break;
           default: 
             Echo("Unknown Command");
             break;
@@ -139,4 +139,10 @@ void ProcessCommands() {
   }
 }
 
-ProcessCommands();
+if (Env.ScriptArgs.Contains("rebuild.and.exit")) {
+  CleanAll();
+  Bootstrap();
+  BuildAll();
+  RunAllTests();
+} else            
+  ProcessCommands();

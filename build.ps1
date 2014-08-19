@@ -1,0 +1,1 @@
+scriptcs .\src\Conz.Minion\minion.csx -- rebuild.and.exit
