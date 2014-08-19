@@ -53,7 +53,7 @@ namespace Conz.Core {
 
     private void ValidateCanBuildSegment() {
       if (!CanBuildSegment)
-        throw new Exception("Cannot Build Segment");
+        throw new ConzException("Cannot Build Segment");
     }
 
     private readonly StringBuilder mClass = new StringBuilder();

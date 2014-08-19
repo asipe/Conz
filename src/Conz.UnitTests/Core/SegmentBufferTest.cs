@@ -1,5 +1,4 @@
-﻿using System;
-using Conz.Core;
+﻿using Conz.Core;
 using NUnit.Framework;
 
 namespace Conz.UnitTests.Core {
@@ -12,7 +11,7 @@ namespace Conz.UnitTests.Core {
 
     [Test]
     public void TestBuildingSegmentWhenCanBuildSegmentIsFalseThrows() {
-      var ex = Assert.Throws<Exception>(() => mBuffer.BuildSegment());
+      var ex = Assert.Throws<ConzException>(() => mBuffer.BuildSegment());
       Assert.That(ex.Message, Is.EqualTo("Cannot Build Segment"));
     }
 
@@ -20,7 +19,7 @@ namespace Conz.UnitTests.Core {
     public void TestBuildingSegmentResetsToNonBuildableState() {
       mBuffer.Add('a');
       AssertAreEqual(mBuffer.BuildSegment(), new Segment(null, "a"));
-      var ex = Assert.Throws<Exception>(() => mBuffer.BuildSegment());
+      var ex = Assert.Throws<ConzException>(() => mBuffer.BuildSegment());
       Assert.That(ex.Message, Is.EqualTo("Cannot Build Segment"));
     }
 
