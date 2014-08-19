@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
   <PropertyGroup>
-    <ProjectGuid>{f44333d6-a806-4023-8c06-a57042f56edf}</ProjectGuid>
+    <ProjectGuid>{23f2a8e1-c09e-4f7c-aaaf-44997165d531}</ProjectGuid>
     <RootNamespace>Conz.UnitTests</RootNamespace>
     <AssemblyName>Conz.UnitTests</AssemblyName>
   </PropertyGroup>
