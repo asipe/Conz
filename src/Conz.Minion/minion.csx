@@ -83,7 +83,17 @@ void RunAllTests() {
   RunUnitTestsDebug();
 }
 
-void ProcessCommands() {
+string[] GetCommands(string[] commands) {
+  return ((commands != null) && commands.Any())
+    ? commands 
+    : Console
+      .ReadLine()
+      .Split(',')
+      .Select(s => s.Trim())
+      .ToArray();
+}
+
+void ProcessCommands(params string[] commands) {
   var exiting = false;
   
   while (!exiting) {
@@ -91,10 +101,7 @@ void ProcessCommands() {
     Console.Write("Waiting: ");
     
     try {    
-      var commands = Console
-        .ReadLine()
-        .Split(',')
-        .Select(s => s.Trim());
+      commands = GetCommands(commands); 
         
       foreach (var command in commands) {
         switch (command) {
@@ -132,6 +139,7 @@ void ProcessCommands() {
             break;
         }
       }
+      commands = null;
     } catch (Exception e) {
       Console.WriteLine("");
       Console.WriteLine(e);
@@ -139,10 +147,4 @@ void ProcessCommands() {
   }
 }
 
-if (Env.ScriptArgs.Contains("rebuild.and.exit")) {
-  CleanAll();
-  Bootstrap();
-  BuildAll();
-  RunAllTests();
-} else            
-  ProcessCommands();
+ProcessCommands(Env.ScriptArgs.ToArray());  
