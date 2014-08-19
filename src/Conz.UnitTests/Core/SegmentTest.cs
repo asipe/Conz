@@ -10,12 +10,5 @@ namespace Conz.UnitTests.Core {
       Assert.That(segment.Class, Is.EqualTo("style"));
       Assert.That(segment.Text, Is.EqualTo("text"));
     }
-
-    [TestCase("", false)]
-    [TestCase("a", false)]
-    [TestCase(null, true)]
-    public void TestIsDefaultStyle(string style, bool expected) {
-      Assert.That(new Segment(style, "").IsDefaultStyle, Is.EqualTo(expected));
-    }
   }
 }
