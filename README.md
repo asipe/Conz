@@ -3,7 +3,6 @@
 Conz is a micro framework for formatting console output
 
 [![Conz.Core on NuGet](http://img.shields.io/nuget/v/Conz.Core.svg?style=flat)](https://www.nuget.org/packages/Conz.Core)
-[![Conz.Core tag](http://img.shields.io/github/tag/asipe/conz.svg?style=flat)](https://github.com/asipe/Conz/tags)
 [![Conz.Core license](http://img.shields.io/badge/license-mit-blue.svg?style=flat)](https://raw.githubusercontent.com/asipe/Conz/master/LICENSE)
 
 ### Install
