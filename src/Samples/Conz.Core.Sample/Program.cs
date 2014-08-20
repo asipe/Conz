@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Conz.Core;
 
-namespace Conz.Samples {
+namespace Conz.Core.Sample {
   internal class Program {
     private static void Main() {
       try {
