@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/asipe/Conz</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Console Utility Library</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>Initial Release</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>utility console</tags>
     <dependencies/>
