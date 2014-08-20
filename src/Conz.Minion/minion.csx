@@ -7,6 +7,7 @@ var config = Require<FitterBuilder>().Build(new {
   ThirdpartyDir = @"<rootdir>\thirdparty",
   PackagesDir = @"<thirdpartydir>\packages",
   NugetExePath = @"<thirdpartydir>\nuget\nuget.exe",
+  NugetWorkingDir = @"<rootdir>\nugetworking",
   NunitConsoleExePath = @"<thirdpartydir>\packages\common\Nunit.Runners\tools\nunit-console.exe"
 });
   
@@ -83,6 +84,17 @@ void RunAllTests() {
   RunUnitTestsDebug();
 }
 
+void PushNugetPackages() {
+  Console.WriteLine("------------------------------");
+  Console.WriteLine("Push Nuget Packages!!");
+  Console.WriteLine("Are You Sure?  Enter YES to Continue");
+  if (Console.ReadLine() == "YES") {
+    Run(config["NugetExePath"], @"push .\nugetworking\Conz.Core\Conz.Core.0.0.0.1.nupkg");
+  }
+  else 
+    Console.WriteLine("Operation Cancelled...");
+}
+
 string[] GetCommands(string[] commands) {
   return ((commands != null) && commands.Any())
     ? commands 
@@ -134,16 +146,19 @@ void ProcessCommands(params string[] commands) {
           case ("run.all.tests"):
             RunAllTests();
             break;
+          case ("push.nuget.packages"):
+            PushNugetPackages();
+            break;
           default: 
             Echo("Unknown Command");
             break;
         }
       }
-      commands = null;
     } catch (Exception e) {
       Console.WriteLine("");
       Console.WriteLine(e);
     }
+    commands = null;
   }
 }
 
