@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Conz.Core;
 using Conz.Core.ConsoleAbstraction;
 using Moq;
@@ -75,6 +76,74 @@ namespace Conz.UnitTests.Core {
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("|blackonblue|Hello World||dark| ||redongreen|Goodbye|end");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
+    }
+
+    [Test]
+    public void TestErrorDelegates() {
+      using (var tw = new StringWriter()) {
+        mConsole.Setup(c => c.Error).Returns(tw);
+        Assert.That(mConzole.Error, Is.EqualTo(tw));
+      }
+    }
+
+    [Test]
+    public void TestInDelegates() {
+      using (var sw = new StringReader("")) {
+        mConsole.Setup(c => c.In).Returns(sw);
+        Assert.That(mConzole.In, Is.EqualTo(sw));
+      }
+    }
+
+    [Test]
+    public void TestOutDelegates() {
+      using (var tw = new StringWriter()) {
+        mConsole.Setup(c => c.Out).Returns(tw);
+        Assert.That(mConzole.Out, Is.EqualTo(tw));
+      }
+    }
+
+    [Test]
+    public void TestBackgroundColorDelegates() {
+      mConsole.Setup(c => c.BackgroundColor).Returns(ConsoleColor.Red);
+      mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.Green);
+      Assert.That(mConzole.BackgroundColor, Is.EqualTo(ConsoleColor.Red));
+      mConzole.BackgroundColor = ConsoleColor.Green;
+    }
+
+    [Test]
+    public void TestForegroundColorDelegates() {
+      mConsole.Setup(c => c.ForegroundColor).Returns(ConsoleColor.Red);
+      mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Green);
+      Assert.That(mConzole.ForegroundColor, Is.EqualTo(ConsoleColor.Red));
+      mConzole.ForegroundColor = ConsoleColor.Green;
+    }
+
+    [Test]
+    public void TestReadLineDelegates() {
+      mConsole.Setup(c => c.ReadLine()).Returns("avalue");
+      Assert.That(mConzole.ReadLine(), Is.EqualTo("avalue"));
+    }
+
+    [Test]
+    public void TestReadKeyDelegates() {
+      var info = new ConsoleKeyInfo();
+      mConsole.Setup(c => c.ReadKey()).Returns(info);
+      Assert.That(mConzole.ReadKey(), Is.EqualTo(info));
+    }
+
+    [Test]
+    public void TestResetColorDelegates() {
+      mConsole.Setup(c => c.ResetColor());
+      mConzole.ResetColor();
+    }
+
+    [Test]
+    public void TestReadKeyWithInterceptDelegates() {
+      var info = new ConsoleKeyInfo();
+      mConsole.Setup(c => c.ReadKey(true)).Returns(info);
+      Assert.That(mConzole.ReadKey(true), Is.EqualTo(info));
+      mConsole.Setup(c => c.ReadKey(false)).Returns(info);
+      Assert.That(mConzole.ReadKey(false), Is.EqualTo(info));
     }
 
     [SetUp]

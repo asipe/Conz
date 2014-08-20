@@ -18,25 +18,25 @@ namespace Conz.Core {
     }
 
     public TextWriter Error {
-      get {throw new NotImplementedException();}
+      get {return mConsole.Error;}
     }
 
     public TextReader In {
-      get {throw new NotImplementedException();}
+      get {return mConsole.In;}
     }
 
     public TextWriter Out {
-      get {throw new NotImplementedException();}
+      get {return mConsole.Out;}
     }
 
     public ConsoleColor BackgroundColor {
-      get {throw new NotImplementedException();}
-      set {throw new NotImplementedException();}
+      get {return mConsole.BackgroundColor;}
+      set {mConsole.BackgroundColor = value;}
     }
 
     public ConsoleColor ForegroundColor {
-      get {throw new NotImplementedException();}
-      set {throw new NotImplementedException();}
+      get {return mConsole.ForegroundColor;}
+      set {mConsole.ForegroundColor = value;}
     }
 
     public void WriteLine() {
@@ -189,19 +189,19 @@ namespace Conz.Core {
     }
 
     public string ReadLine() {
-      throw new NotImplementedException();
+      return mConsole.ReadLine();
     }
 
     public ConsoleKeyInfo ReadKey() {
-      throw new NotImplementedException();
+      return mConsole.ReadKey();
     }
 
     public ConsoleKeyInfo ReadKey(bool intercept) {
-      throw new NotImplementedException();
+      return mConsole.ReadKey(intercept);
     }
 
     public void ResetColor() {
-      throw new NotImplementedException();
+      mConsole.ResetColor();
     }
 
     private void DoWork(Segment segment) {
