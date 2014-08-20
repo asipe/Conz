@@ -1,5 +1,10 @@
 using System.Diagnostics;
 
+using Conz.Core;
+
+var conzole = new Conzole(new StyleSheet(null, 
+                                         new Class("er", null, ConsoleColor.Red)));
+
 var config = Require<FitterBuilder>().Build(new {
   RootDir = Directory.GetCurrentDirectory(),
   DebugDir = @"<rootdir>\debug",
@@ -26,8 +31,8 @@ void CleanAll() {
 }
 
 void Echo(string message) {
-  Console.WriteLine("");
-  Console.WriteLine(message);
+  conzole.WriteLine("");
+  conzole.WriteLine(message);
 }
 
 void Bootstrap() {
@@ -150,13 +155,13 @@ void ProcessCommands(params string[] commands) {
             PushNugetPackages();
             break;
           default: 
-            Echo("Unknown Command");
+            Echo("|er|Unknown Command|");
             break;
         }
       }
     } catch (Exception e) {
       Console.WriteLine("");
-      Console.WriteLine(e);
+      Console.WriteLine(string.Format("|er|{0}|", e));
     }
     commands = null;
   }
