@@ -40,7 +40,7 @@ namespace Conz.Core {
     }
 
     public void WriteLine() {
-      throw new NotImplementedException();
+      mConsole.WriteLine();
     }
 
     public void WriteLine(bool value) {

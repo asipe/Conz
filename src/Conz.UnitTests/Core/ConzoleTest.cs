@@ -148,6 +148,12 @@ namespace Conz.UnitTests.Core {
     }
 
     [Test]
+    public void TestWriteLineWithNoArgs() {
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine();
+    }
+
+    [Test]
     public void TestWriteBool() {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
