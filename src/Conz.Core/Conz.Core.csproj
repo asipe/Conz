@@ -38,6 +38,7 @@
     <Compile Include="..\Conz.Properties\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuiltInStyles\ForegroundColorOnly.cs" />
     <Compile Include="ColoredAction.cs" />
     <Compile Include="ColoredActionFactory.cs" />
     <Compile Include="ConsoleAbstraction\DotNetConsole.cs" />
