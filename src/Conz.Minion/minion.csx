@@ -1,9 +1,7 @@
 using System.Diagnostics;
-
 using Conz.Core;
 
-var conzole = new Conzole(new StyleSheet(null, 
-                                         new Class("er", null, ConsoleColor.Red)));
+var conzole = new Conzole(Conz.Core.BuiltInStyles.ForegroundColorOnly._Instance);
 
 var config = Require<FitterBuilder>().Build(new {
   RootDir = Directory.GetCurrentDirectory(),
@@ -30,9 +28,9 @@ void CleanAll() {
   TryDelete(config["PackagesDir"]);
 }
 
-void Echo(string message) {
+void Echo(string message, params string[] args) {
   conzole.WriteLine("");
-  conzole.WriteLine(message);
+  conzole.WriteLine(message, args);
 }
 
 void Bootstrap() {
@@ -69,11 +67,11 @@ void BuildNugetPackages() {
 }
 
 void RunTests(string name, string assembly, string framework) {
-  Console.WriteLine("----------- {0} Tests {1} -----------", name, framework);
-  Console.WriteLine("-- {0}", assembly);
+  conzole.WriteLine("|dc|------------------------------------------|");
+  conzole.WriteLine("|y|----------- {0} Tests {1} -----------|", name, framework);
+  conzole.WriteLine("|y|-- {0}|", assembly);
   Run(config["NunitConsoleExePath"], string.Format(@"{0} /nologo /framework:{1}", assembly, framework));
-  Console.WriteLine("------------------------------------------");
-  Console.WriteLine();
+  conzole.WriteLine("|dc|------------------------------------------");
 }
 
 void RunUnitTestsVS() {
@@ -90,20 +88,21 @@ void RunAllTests() {
 }
 
 void PushNugetPackages() {
-  Console.WriteLine("------------------------------");
-  Console.WriteLine("Push Nuget Packages!!");
-  Console.WriteLine("Are You Sure?  Enter YES to Continue");
-  if (Console.ReadLine() == "YES") {
+  conzole.WriteLine("|dc|------------------------------------------|");
+  conzole.WriteLine("|y|Push Nuget Packages!!|");
+  conzole.WriteLine("|y|Are You Sure?|  Enter YES to Continue");
+  if (conzole.ReadLine() == "YES") {
     Run(config["NugetExePath"], @"push .\nugetworking\Conz.Core\Conz.Core.0.0.0.2.nupkg");
   }
   else 
-    Console.WriteLine("Operation Cancelled...");
+    conzole.WriteLine("|r|Operation Cancelled...|");
+  conzole.WriteLine("|dc|------------------------------------------|");
 }
 
 string[] GetCommands(string[] commands) {
   return ((commands != null) && commands.Any())
     ? commands 
-    : Console
+    : conzole
       .ReadLine()
       .Split(',')
       .Select(s => s.Trim())
@@ -114,8 +113,8 @@ void ProcessCommands(params string[] commands) {
   var exiting = false;
   
   while (!exiting) {
-    Console.WriteLine("");
-    Console.Write("Waiting: ");
+    conzole.WriteLine("");
+    conzole.Write("Waiting: ");
     
     try {    
       commands = GetCommands(commands); 
@@ -155,13 +154,13 @@ void ProcessCommands(params string[] commands) {
             PushNugetPackages();
             break;
           default: 
-            Echo("|er|Unknown Command|");
+            Echo("|r|Unknown Command: '{0}'|", command);
             break;
         }
       }
     } catch (Exception e) {
-      Console.WriteLine("");
-      Console.WriteLine(string.Format("|er|{0}|", e));
+      conzole.WriteLine("");
+      conzole.WriteLine("|r|{0}|", e);
     }
     commands = null;
   }
