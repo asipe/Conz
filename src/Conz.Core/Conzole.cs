@@ -165,7 +165,7 @@ namespace Conz.Core {
     }
 
     public void Write(string format, object arg0) {
-      throw new NotImplementedException();
+      Write(string.Format(format, arg0));
     }
 
     public void Write(string format, params object[] arg) {

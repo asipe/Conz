@@ -295,6 +295,33 @@ namespace Conz.UnitTests.Core {
     }
 
     [Test]
+    public void TestWriteFormattedSingleArgNoFormat() {
+      mParser.Setup(p => p.Parse("Hello World")).Returns(BA(new Segment(null, "Hello World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello World"));
+      mConzole.Write("Hello {0}", "World");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
+    }
+
+    [Test]
+    public void TestWriteFormattedSingleArgWithFormat() {
+      mParser.Setup(p => p.Parse("Hello |blackonblue|World|")).Returns(BA(new Segment(null, "Hello "),
+                                                                          new Segment("blackonblue", "World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello "));
+      mConsole.Setup(c => c.Write("World"));
+      mConzole.Write("Hello {0}", "|blackonblue|World|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(2));
+    }
+
+    [Test]
     public void TestWriteLineCharArray() {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
