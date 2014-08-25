@@ -44,39 +44,39 @@ namespace Conz.Core {
     }
 
     public void WriteLine(bool value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(char value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(char[] buffer) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(buffer));
     }
 
     public void WriteLine(decimal value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(double value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(int value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(long value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(object value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(float value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(string value) {
@@ -85,11 +85,11 @@ namespace Conz.Core {
     }
 
     public void WriteLine(uint value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(ulong value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(value));
     }
 
     public void WriteLine(string format, object arg0) {
@@ -117,39 +117,39 @@ namespace Conz.Core {
     }
 
     public void Write(bool value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(char value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(char[] buffer) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(buffer));
     }
 
     public void Write(decimal value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(double value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(int value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(long value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(object value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(float value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(string value) {
@@ -157,11 +157,11 @@ namespace Conz.Core {
     }
 
     public void Write(uint value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(ulong value) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(value));
     }
 
     public void Write(string format, object arg0) {
@@ -208,6 +208,10 @@ namespace Conz.Core {
       mFactory
         .Build(mConsole, mStyleSheet.Default, @class)
         .Execute(action);
+    }
+
+    private void DoWorkWithDefault(Action<IConsole> action) {
+      DoWork(mStyleSheet.Default, action);
     }
 
     private readonly IConsole mConsole;
