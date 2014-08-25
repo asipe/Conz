@@ -265,6 +265,16 @@ namespace Conz.UnitTests.Core {
     }
 
     [Test]
+    public void TestWriteRangedCharBuffer() {
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write(new[] {'a'}, 1, 2));
+      mConzole.Write(new[] {'a'}, 1, 2);
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
+    }
+
+    [Test]
     public void TestWriteLineBool() {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
@@ -372,6 +382,16 @@ namespace Conz.UnitTests.Core {
         .Returns(mAction);
       mConsole.Setup(c => c.WriteLine(list));
       mConzole.WriteLine(list);
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
+    }
+
+    [Test]
+    public void TestWriteLineRangedCharBuffer() {
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mConsole.Setup(c => c.WriteLine(new[] {'a'}, 1, 2));
+      mConzole.WriteLine(new[] {'a'}, 1, 2);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
     }
 

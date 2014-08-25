@@ -101,7 +101,7 @@ namespace Conz.Core {
     }
 
     public void WriteLine(char[] buffer, int index, int count) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.WriteLine(buffer, index, count));
     }
 
     public void WriteLine(string format, object arg0, object arg1) {
@@ -173,7 +173,7 @@ namespace Conz.Core {
     }
 
     public void Write(char[] buffer, int index, int count) {
-      throw new NotImplementedException();
+      DoWorkWithDefault(c => c.Write(buffer, index, count));
     }
 
     public void Write(string format, object arg0, object arg1) {
