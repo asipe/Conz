@@ -153,7 +153,7 @@ namespace Conz.Core {
     }
 
     public void Write(string value) {
-      Array.ForEach(mParser.Parse(value), DoWork);
+      Array.ForEach(mParser.Parse(value), segment => DoWork(mMap[segment.Class], c => c.Write(segment.Text)));
     }
 
     public void Write(uint value) {
@@ -204,10 +204,10 @@ namespace Conz.Core {
       mConsole.ResetColor();
     }
 
-    private void DoWork(Segment segment) {
+    private void DoWork(Class @class, Action<IConsole> action) {
       mFactory
-        .Build(mConsole, mStyleSheet.Default, mMap[segment.Class])
-        .Execute(c => c.Write(segment.Text));
+        .Build(mConsole, mStyleSheet.Default, @class)
+        .Execute(action);
     }
 
     private readonly IConsole mConsole;
