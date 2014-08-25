@@ -322,6 +322,99 @@ namespace Conz.UnitTests.Core {
     }
 
     [Test]
+    public void TestWriteFormatted2ArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello| |f1|World|")).Returns(BA(new Segment("f2", "Hello"),
+                                                                      new Segment(null, " "),
+                                                                      new Segment("f1", "World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write(" "));
+      mConsole.Setup(c => c.Write("World"));
+      mConzole.Write("{0} {1}", "|f2|Hello|", "|f1|World|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+    }
+
+    [Test]
+    public void TestWriteFormatted3ArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello|-|f1|World|")).Returns(BA(new Segment("f2", "Hello"),
+                                                                      new Segment(null, "-"),
+                                                                      new Segment("f1", "World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write("-"));
+      mConsole.Setup(c => c.Write("World"));
+      mConzole.Write("{0}{1}{2}", "|f2|Hello|", "-", "|f1|World|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+    }
+
+    [Test]
+    public void TestWriteFormatted4ArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello|-|f1|World|*")).Returns(BA(new Segment("f2", "Hello"),
+                                                                       new Segment(null, "-"),
+                                                                       new Segment("f1", "World"),
+                                                                       new Segment(null, "*")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write("-"));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.Write("*"));
+      mConzole.Write("{0}{1}{2}{3}", "|f2|Hello|", "-", "|f1|World|", "*");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
+    }
+
+    [Test]
+    public void TestWriteFormattedParamsArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello|-|f1|World|*|f3|_|")).Returns(BA(new Segment("f2", "Hello"),
+                                                                             new Segment(null, "-"),
+                                                                             new Segment("f1", "World"),
+                                                                             new Segment(null, "*"),
+                                                                             new Segment("f3", "_")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[2])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write("-"));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.Write("*"));
+      mConsole.Setup(c => c.Write("_"));
+      mConzole.Write("{0}{1}{2}{3}{4}", "|f2|Hello|", "-", "|f1|World|", "*", "|f3|_|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(5));
+    }
+
+    [Test]
     public void TestWriteLineCharArray() {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
@@ -420,6 +513,132 @@ namespace Conz.UnitTests.Core {
       mConsole.Setup(c => c.WriteLine(new[] {'a'}, 1, 2));
       mConzole.WriteLine(new[] {'a'}, 1, 2);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
+    }
+
+    [Test]
+    public void TestWriteLineFormattedSingleArgNoFormat() {
+      mParser.Setup(p => p.Parse("Hello World")).Returns(BA(new Segment(null, "Hello World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello World"));
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine("Hello {0}", "World");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
+    }
+
+    [Test]
+    public void TestWriteLineFormattedSingleArgWithFormat() {
+      mParser.Setup(p => p.Parse("Hello |f1|World|")).Returns(BA(new Segment(null, "Hello "),
+                                                                 new Segment("f1", "World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello "));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine("Hello {0}", "|f1|World|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(2));
+    }
+
+    [Test]
+    public void TestWriteLineFormatted2ArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello| |f1|World|")).Returns(BA(new Segment("f2", "Hello"),
+                                                                      new Segment(null, " "),
+                                                                      new Segment("f1", "World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write(" "));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine("{0} {1}", "|f2|Hello|", "|f1|World|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+    }
+
+    [Test]
+    public void TestWriteLineFormatted3ArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello|-|f1|World|")).Returns(BA(new Segment("f2", "Hello"),
+                                                                      new Segment(null, "-"),
+                                                                      new Segment("f1", "World")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write("-"));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine("{0}{1}{2}", "|f2|Hello|", "-", "|f1|World|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+    }
+
+    [Test]
+    public void TestWriteLineFormatted4ArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello|-|f1|World|*")).Returns(BA(new Segment("f2", "Hello"),
+                                                                       new Segment(null, "-"),
+                                                                       new Segment("f1", "World"),
+                                                                       new Segment(null, "*")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write("-"));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.Write("*"));
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine("{0}{1}{2}{3}", "|f2|Hello|", "-", "|f1|World|", "*");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
+    }
+
+    [Test]
+    public void TestWriteLineFormattedParamsArgWithFormat() {
+      mParser.Setup(p => p.Parse("|f2|Hello|-|f1|World|*|f3|_|")).Returns(BA(new Segment("f2", "Hello"),
+                                                                             new Segment(null, "-"),
+                                                                             new Segment("f1", "World"),
+                                                                             new Segment(null, "*"),
+                                                                             new Segment("f3", "_")));
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[1])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
+        .Returns(mAction);
+      mFactory
+        .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[2])))
+        .Returns(mAction);
+      mConsole.Setup(c => c.Write("Hello"));
+      mConsole.Setup(c => c.Write("-"));
+      mConsole.Setup(c => c.Write("World"));
+      mConsole.Setup(c => c.Write("*"));
+      mConsole.Setup(c => c.Write("_"));
+      mConsole.Setup(c => c.WriteLine());
+      mConzole.WriteLine("{0}{1}{2}{3}{4}", "|f2|Hello|", "-", "|f1|World|", "*", "|f3|_|");
+      mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(5));
     }
 
     [SetUp]

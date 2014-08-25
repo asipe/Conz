@@ -93,11 +93,13 @@ namespace Conz.Core {
     }
 
     public void WriteLine(string format, object arg0) {
-      throw new NotImplementedException();
+      Write(format, arg0);
+      WriteLine();
     }
 
     public void WriteLine(string format, params object[] arg) {
-      throw new NotImplementedException();
+      Write(format, arg);
+      WriteLine();
     }
 
     public void WriteLine(char[] buffer, int index, int count) {
@@ -105,15 +107,18 @@ namespace Conz.Core {
     }
 
     public void WriteLine(string format, object arg0, object arg1) {
-      throw new NotImplementedException();
+      Write(format, arg0, arg1);
+      WriteLine();
     }
 
     public void WriteLine(string format, object arg0, object arg1, object arg2) {
-      throw new NotImplementedException();
+      Write(format, arg0, arg1, arg2);
+      WriteLine();
     }
 
     public void WriteLine(string format, object arg0, object arg1, object arg2, object arg3) {
-      throw new NotImplementedException();
+      Write(format, arg0, arg1, arg2, arg3);
+      WriteLine();
     }
 
     public void Write(bool value) {
@@ -169,7 +174,7 @@ namespace Conz.Core {
     }
 
     public void Write(string format, params object[] arg) {
-      throw new NotImplementedException();
+      Write(string.Format(format, arg));
     }
 
     public void Write(char[] buffer, int index, int count) {
@@ -177,15 +182,15 @@ namespace Conz.Core {
     }
 
     public void Write(string format, object arg0, object arg1) {
-      throw new NotImplementedException();
+      Write(string.Format(format, arg0, arg1));
     }
 
     public void Write(string format, object arg0, object arg1, object arg2) {
-      throw new NotImplementedException();
+      Write(string.Format(format, arg0, arg1, arg2));
     }
 
     public void Write(string format, object arg0, object arg1, object arg2, object arg3) {
-      throw new NotImplementedException();
+      Write(string.Format(format, arg0, arg1, arg2, arg3));
     }
 
     public string ReadLine() {
