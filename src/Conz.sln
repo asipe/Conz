@@ -30,6 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Minion", "Conz.Minion", "{C003173B-713C-4319-B19F-5132DDDA37D0}"
 	ProjectSection(SolutionItems) = preProject
 		Conz.Minion\minion.csx = Conz.Minion\minion.csx
+		Conz.Minion\packages.config = Conz.Minion\packages.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conz.Build", "Conz.Build", "{5D7ECF1B-FEDE-4FD4-9060-C5F1052F3027}"
