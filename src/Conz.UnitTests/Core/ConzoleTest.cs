@@ -42,22 +42,22 @@ namespace Conz.UnitTests.Core {
 
     [Test]
     public void TestWriteLineWithSingleSegmentWithClass() {
-      mParser.Setup(p => p.Parse("|blackonblue|Hello World|")).Returns(BA(new Segment("blackonblue", "Hello World")));
+      mParser.Setup(p => p.Parse("|f1|Hello World|")).Returns(BA(new Segment("f1", "Hello World")));
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
       mConsole.Setup(c => c.Write("Hello World"));
       mConsole.Setup(c => c.WriteLine());
-      mConzole.WriteLine("|blackonblue|Hello World|");
+      mConzole.WriteLine("|f1|Hello World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
     }
 
     [Test]
     public void TestWriteLineWithMultipleSegments() {
-      mParser.Setup(p => p.Parse("|blackonblue|Hello World||dark| ||redongreen|Goodbye|end")).Returns(BA(new Segment("blackonblue", "Hello World"),
-                                                                                                         new Segment("dark", " "),
-                                                                                                         new Segment("redongreen", "Goodbye"),
-                                                                                                         new Segment(null, "end")));
+      mParser.Setup(p => p.Parse("|f1|Hello World||f3| ||f2|Goodbye|end")).Returns(BA(new Segment("f1", "Hello World"),
+                                                                                      new Segment("f3", " "),
+                                                                                      new Segment("f2", "Goodbye"),
+                                                                                      new Segment(null, "end")));
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
@@ -75,7 +75,7 @@ namespace Conz.UnitTests.Core {
       mConsole.Setup(c => c.Write("Goodbye"));
       mConsole.Setup(c => c.Write("end"));
       mConsole.Setup(c => c.WriteLine());
-      mConzole.WriteLine("|blackonblue|Hello World||dark| ||redongreen|Goodbye|end");
+      mConzole.WriteLine("|f1|Hello World||f3| ||f2|Goodbye|end");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
     }
 
@@ -307,8 +307,8 @@ namespace Conz.UnitTests.Core {
 
     [Test]
     public void TestWriteFormattedSingleArgWithFormat() {
-      mParser.Setup(p => p.Parse("Hello |blackonblue|World|")).Returns(BA(new Segment(null, "Hello "),
-                                                                          new Segment("blackonblue", "World")));
+      mParser.Setup(p => p.Parse("Hello |f1|World|")).Returns(BA(new Segment(null, "Hello "),
+                                                                 new Segment("f1", "World")));
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
@@ -317,7 +317,7 @@ namespace Conz.UnitTests.Core {
         .Returns(mAction);
       mConsole.Setup(c => c.Write("Hello "));
       mConsole.Setup(c => c.Write("World"));
-      mConzole.Write("Hello {0}", "|blackonblue|World|");
+      mConzole.Write("Hello {0}", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(2));
     }
 
@@ -428,9 +428,9 @@ namespace Conz.UnitTests.Core {
       mParser = Mok<IParser>();
       mFactory = Mok<IColoredActionFactory>();
       mStyleSheet = new StyleSheet(new Class("default", ConsoleColor.Yellow, ConsoleColor.White),
-                                   BA(new Class("blackonblue", ConsoleColor.Blue, ConsoleColor.Black),
-                                      new Class("redongreen", ConsoleColor.Green, ConsoleColor.Red),
-                                      new Class("dark", ConsoleColor.DarkBlue, ConsoleColor.DarkCyan)));
+                                   BA(new Class("f1", ConsoleColor.Blue, ConsoleColor.Black),
+                                      new Class("f2", ConsoleColor.Green, ConsoleColor.Red),
+                                      new Class("f3", ConsoleColor.DarkBlue, ConsoleColor.DarkCyan)));
       mAction = new StubColoredAction(mConsole.Object);
       mConzole = new Conzole(mConsole.Object, mParser.Object, mFactory.Object, mStyleSheet);
     }
