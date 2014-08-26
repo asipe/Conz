@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using Conz.Core;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace Conz.UnitTests {
   [TestFixture]
@@ -11,6 +13,7 @@ namespace Conz.UnitTests {
     public void BaseSetup() {
       MokFac = new MockRepository(MockBehavior.Strict);
       ObjectFixture = new Fixture();
+      CustomizeObjectFixture();
     }
 
     [TearDown]
@@ -57,6 +60,11 @@ namespace Conz.UnitTests {
 
     private void VerifyMocks() {
       MokFac.VerifyAll();
+    }
+
+    private void CustomizeObjectFixture() {
+      ObjectFixture
+        .Customize<Class>(c => c.FromFactory(new MethodInvoker(new GreedyConstructorQuery())));
     }
 
     protected MockRepository MokFac{get;private set;}
