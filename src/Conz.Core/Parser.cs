@@ -15,9 +15,9 @@ namespace Conz.Core {
 
     public Segment[] Parse(string text) {
       return (text == "")
-               ? _EmptySegment
+               ? Constants._EmptySegment
                : (text == null)
-                   ? _EmptySegment
+                   ? Constants._EmptySegment
                    : ParseText(text).ToArray();
     }
 
@@ -51,7 +51,6 @@ namespace Conz.Core {
         yield return buffer.BuildSegment();
     }
 
-    private static readonly Segment[] _EmptySegment = {new Segment(null, "")};
     private readonly char mDelimiter;
   }
 }

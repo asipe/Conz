@@ -24,8 +24,8 @@ namespace Conz.UnitTests.Core {
     }
 
     private IEnumerable GetParseTests() {
-      yield return new TestCaseData(null, BA(new Segment(null, "")));
-      yield return new TestCaseData("", BA(new Segment(null, "")));
+      yield return new TestCaseData(null, BA(Constants._EmptySegment));
+      yield return new TestCaseData("", BA(Constants._EmptySegment));
       yield return new TestCaseData(" ", BA(new Segment(null, " ")));
       yield return new TestCaseData("  ", BA(new Segment(null, "  ")));
       yield return new TestCaseData("a", BA(new Segment(null, "a")));
