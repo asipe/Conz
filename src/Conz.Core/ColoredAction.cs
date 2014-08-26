@@ -22,13 +22,13 @@ namespace Conz.Core {
       }
     }
 
-    private static ConsoleColor GetCurrentColor(ConsoleColor? currentClassColor,
-                                                ConsoleColor? defaultClassColor,
+    private static ConsoleColor GetCurrentColor(ConzoleColor? currentClassColor,
+                                                ConzoleColor? defaultClassColor,
                                                 ConsoleColor currentConsoleColor) {
       return currentClassColor.HasValue
-               ? currentClassColor.Value
+               ? (ConsoleColor)currentClassColor.Value
                : defaultClassColor.HasValue
-                   ? defaultClassColor.Value
+                   ? (ConsoleColor)defaultClassColor.Value
                    : currentConsoleColor;
     }
 

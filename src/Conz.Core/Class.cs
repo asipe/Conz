@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace Conz.Core {
+﻿namespace Conz.Core {
   public class Class {
     public Class(string name, int indent) : this(name, null, null, indent) {
       Name = name;
       Indent = indent;
     }
 
-    public Class(string name, ConsoleColor? backgroundColor = null, ConsoleColor? color = null, int indent = 0) {
+    public Class(string name, ConzoleColor? backgroundColor = null, ConzoleColor? color = null, int indent = 0) {
       Name = name;
       BackgroundColor = backgroundColor;
       Color = color;
@@ -16,7 +14,7 @@ namespace Conz.Core {
 
     public int Indent{get;set;}
     public string Name{get;private set;}
-    public ConsoleColor? BackgroundColor{get;private set;}
-    public ConsoleColor? Color{get;private set;}
+    public ConzoleColor? BackgroundColor{get;private set;}
+    public ConzoleColor? Color{get;private set;}
   }
 }

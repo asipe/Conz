@@ -47,44 +47,44 @@ namespace Conz.UnitTests.Core {
     }
 
     private static IEnumerable GetActionTests() {
-      yield return new TestCaseData(new Class("", ConsoleColor.Yellow, ConsoleColor.Red, 0),
+      yield return new TestCaseData(new Class("", ConzoleColor.Yellow, ConzoleColor.Red),
                                     null,
                                     ConsoleColor.Yellow,
                                     ConsoleColor.Red)
         .SetName("TestExecuteWithNullCurrentClassUsesDefaultClass");
 
-      yield return new TestCaseData(new Class("", ConsoleColor.Yellow, ConsoleColor.Red, 0),
-                                    new Class("", null, null, 0),
+      yield return new TestCaseData(new Class("", ConzoleColor.Yellow, ConzoleColor.Red),
+                                    new Class(""),
                                     ConsoleColor.Yellow,
                                     ConsoleColor.Red)
         .SetName("TestExecuteWithCurrentClassWithNullColorAndBackgroundUsesDefaultClass");
 
-      yield return new TestCaseData(new Class("", ConsoleColor.Yellow, ConsoleColor.Red, 0),
-                                    new Class("", ConsoleColor.DarkRed, ConsoleColor.DarkYellow, 0),
+      yield return new TestCaseData(new Class("", ConzoleColor.Yellow, ConzoleColor.Red),
+                                    new Class("", ConzoleColor.DarkRed, ConzoleColor.DarkYellow),
                                     ConsoleColor.DarkRed,
                                     ConsoleColor.DarkYellow)
         .SetName("TestExecuteWithCurrentClassDefinedUsesCurrentClass");
 
-      yield return new TestCaseData(new Class("", ConsoleColor.Yellow, ConsoleColor.Red, 0),
-                                    new Class("", null, ConsoleColor.DarkYellow, 0),
+      yield return new TestCaseData(new Class("", ConzoleColor.Yellow, ConzoleColor.Red),
+                                    new Class("", null, ConzoleColor.DarkYellow),
                                     ConsoleColor.Yellow,
                                     ConsoleColor.DarkYellow)
         .SetName("TestExecuteWithCurrentWithNoBackgroundUsesDefaultBackground");
 
-      yield return new TestCaseData(new Class("", ConsoleColor.Yellow, ConsoleColor.Red, 0),
-                                    new Class("", ConsoleColor.DarkRed, null, 0),
+      yield return new TestCaseData(new Class("", ConzoleColor.Yellow, ConzoleColor.Red),
+                                    new Class("", ConzoleColor.DarkRed),
                                     ConsoleColor.DarkRed,
                                     ConsoleColor.Red)
         .SetName("TestExecuteWithCurrentWithNoColorUsesDefaultColor");
 
       yield return new TestCaseData(null,
-                                    new Class("", ConsoleColor.DarkRed, ConsoleColor.DarkYellow, 0),
+                                    new Class("", ConzoleColor.DarkRed, ConzoleColor.DarkYellow),
                                     ConsoleColor.DarkRed,
                                     ConsoleColor.DarkYellow)
         .SetName("TestExecuteWithCurrentClassDefinedAndNullDefaultUsesCurrentClass");
 
-      yield return new TestCaseData(new Class("", null, null, 0),
-                                    new Class("", ConsoleColor.DarkRed, ConsoleColor.DarkYellow, 0),
+      yield return new TestCaseData(new Class(""),
+                                    new Class("", ConzoleColor.DarkRed, ConzoleColor.DarkYellow),
                                     ConsoleColor.DarkRed,
                                     ConsoleColor.DarkYellow)
         .SetName("TestExecuteWithCurrentClassDefinedAndNullDefaultValuesUsesCurrentClass");
@@ -95,8 +95,8 @@ namespace Conz.UnitTests.Core {
                                     ConsoleColor.Green)
         .SetName("TestExecuteWithBothDefaultAndCurrentNullUseCurrentConsoleValues");
 
-      yield return new TestCaseData(new Class("", null, null, 0),
-                                    new Class("", null, null, 0),
+      yield return new TestCaseData(new Class(""),
+                                    new Class(""),
                                     ConsoleColor.White,
                                     ConsoleColor.Green)
         .SetName("TestExecuteWithBothDefaultAndCurrentHaveNullValuesUseCurrentConsoleValues");

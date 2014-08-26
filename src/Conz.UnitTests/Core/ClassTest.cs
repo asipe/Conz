@@ -1,5 +1,4 @@
-﻿using System;
-using Conz.Core;
+﻿using Conz.Core;
 using NUnit.Framework;
 
 namespace Conz.UnitTests.Core {
@@ -7,10 +6,10 @@ namespace Conz.UnitTests.Core {
   public class ClassTest : BaseTestCase {
     [Test]
     public void TestDefaults() {
-      var @class = new Class("class", ConsoleColor.Red, ConsoleColor.Green, 5);
+      var @class = new Class("class", ConzoleColor.Red, ConzoleColor.Green, 5);
       Assert.That(@class.Name, Is.EqualTo("class"));
-      Assert.That(@class.BackgroundColor, Is.EqualTo(ConsoleColor.Red));
-      Assert.That(@class.Color, Is.EqualTo(ConsoleColor.Green));
+      Assert.That(@class.BackgroundColor, Is.EqualTo(ConzoleColor.Red));
+      Assert.That(@class.Color, Is.EqualTo(ConzoleColor.Green));
       Assert.That(@class.Indent, Is.EqualTo(5));
     }
 

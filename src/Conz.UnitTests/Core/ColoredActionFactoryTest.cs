@@ -14,8 +14,8 @@ namespace Conz.UnitTests.Core {
       var action = mFactory.Build(mConsole.Object, defaultClass, currentClass);
       mConsole.Setup(c => c.ForegroundColor).Returns(ConsoleColor.Green);
       mConsole.Setup(c => c.BackgroundColor).Returns(ConsoleColor.White);
-      mConsole.SetupSet(c => c.ForegroundColor = currentClass.Color.Value);
-      mConsole.SetupSet(c => c.BackgroundColor = currentClass.BackgroundColor.Value);
+      mConsole.SetupSet(c => c.ForegroundColor = (ConsoleColor)currentClass.Color.Value);
+      mConsole.SetupSet(c => c.BackgroundColor = (ConsoleColor)currentClass.BackgroundColor.Value);
       mConsole.SetupSet(c => c.ForegroundColor = ConsoleColor.Green);
       mConsole.SetupSet(c => c.BackgroundColor = ConsoleColor.White);
       mConsole.Setup(c => c.WriteLine(""));
