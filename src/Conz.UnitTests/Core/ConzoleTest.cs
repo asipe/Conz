@@ -651,7 +651,7 @@ namespace Conz.UnitTests.Core {
                                       new Class("f2", ConsoleColor.Green, ConsoleColor.Red, 0),
                                       new Class("f3", ConsoleColor.DarkBlue, ConsoleColor.DarkCyan, 0)));
       mAction = new StubColoredAction(mConsole.Object);
-      mConzole = new Conzole(mConsole.Object, mParser.Object, mFactory.Object, mStyleSheet);
+      mConzole = new Conzole(mStyleSheet, mConsole.Object, mParser.Object, mFactory.Object);
     }
 
     private Mock<IConsole> mConsole;

@@ -4,12 +4,12 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public class Conzole : IConsole {
-    public Conzole(StyleSheet styleSheet, char delimiter = '|') : this(new DotNetConsole(), new Parser(delimiter), new ColoredActionFactory(), styleSheet) {}
+    public Conzole(StyleSheet styleSheet, char delimiter = '|') : this(styleSheet, new DotNetConsole(), new Parser(delimiter), new ColoredActionFactory()) {}
 
-    public Conzole(IConsole console,
+    public Conzole(StyleSheet styleSheet,
+                   IConsole console,
                    IParser parser,
-                   IColoredActionFactory factory,
-                   StyleSheet styleSheet) {
+                   IColoredActionFactory factory) {
       mMap = new StyleSheetMap(styleSheet);
       mConsole = console;
       mParser = parser;
