@@ -17,8 +17,8 @@ namespace Conz.UnitTests.Core {
     public void TestDefaultCtorArgs() {
       var @class = new Class("class");
       Assert.That(@class.Name, Is.EqualTo("class"));
-      Assert.That(@class.BackgroundColor, Is.Null);
-      Assert.That(@class.Color, Is.Null);
+      Assert.That(@class.BackgroundColor, Is.EqualTo(ConzoleColor.Default));
+      Assert.That(@class.Color, Is.EqualTo(ConzoleColor.Default));
       Assert.That(@class.Indent, Is.EqualTo(0));
     }
 
@@ -26,8 +26,8 @@ namespace Conz.UnitTests.Core {
     public void TestIndentOnlyCtor() {
       var @class = new Class("class", 5);
       Assert.That(@class.Name, Is.EqualTo("class"));
-      Assert.That(@class.BackgroundColor, Is.Null);
-      Assert.That(@class.Color, Is.Null);
+      Assert.That(@class.BackgroundColor, Is.EqualTo(ConzoleColor.Default));
+      Assert.That(@class.Color, Is.EqualTo(ConzoleColor.Default));
       Assert.That(@class.Indent, Is.EqualTo(5));
     }
   }

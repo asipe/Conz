@@ -66,7 +66,7 @@ namespace Conz.UnitTests.Core {
         .SetName("TestExecuteWithCurrentClassDefinedUsesCurrentClass");
 
       yield return new TestCaseData(new Class("", ConzoleColor.Yellow, ConzoleColor.Red),
-                                    new Class("", null, ConzoleColor.DarkYellow),
+                                    new Class("", ConzoleColor.Default, ConzoleColor.DarkYellow),
                                     ConsoleColor.Yellow,
                                     ConsoleColor.DarkYellow)
         .SetName("TestExecuteWithCurrentWithNoBackgroundUsesDefaultBackground");
