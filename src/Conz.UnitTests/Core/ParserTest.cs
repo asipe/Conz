@@ -10,6 +10,14 @@ namespace Conz.UnitTests.Core {
       AssertAreEqual(mParser.Parse(text), expected);
     }
 
+    [Test]
+    public void TestWithACustomParseCharacter() {
+      mParser = new Parser('^');
+      AssertAreEqual(mParser.Parse("^a^hello world^zzz^b^goodbye world^"), BA(new Segment("a", "hello world"),
+                                                                              new Segment(null, "zzz"),
+                                                                              new Segment("b", "goodbye world")));
+    }
+
     [SetUp]
     public void DoSetup() {
       mParser = new Parser();
