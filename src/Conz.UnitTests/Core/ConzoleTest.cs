@@ -646,10 +646,10 @@ namespace Conz.UnitTests.Core {
       mConsole = Mok<IConsole>();
       mParser = Mok<IParser>();
       mFactory = Mok<IColoredActionFactory>();
-      mStyleSheet = new StyleSheet(new Class("default", ConsoleColor.Yellow, ConsoleColor.White),
-                                   BA(new Class("f1", ConsoleColor.Blue, ConsoleColor.Black),
-                                      new Class("f2", ConsoleColor.Green, ConsoleColor.Red),
-                                      new Class("f3", ConsoleColor.DarkBlue, ConsoleColor.DarkCyan)));
+      mStyleSheet = new StyleSheet(new Class("default", ConsoleColor.Yellow, ConsoleColor.White, 0),
+                                   BA(new Class("f1", ConsoleColor.Blue, ConsoleColor.Black, 0),
+                                      new Class("f2", ConsoleColor.Green, ConsoleColor.Red, 0),
+                                      new Class("f3", ConsoleColor.DarkBlue, ConsoleColor.DarkCyan, 0)));
       mAction = new StubColoredAction(mConsole.Object);
       mConzole = new Conzole(mConsole.Object, mParser.Object, mFactory.Object, mStyleSheet);
     }
