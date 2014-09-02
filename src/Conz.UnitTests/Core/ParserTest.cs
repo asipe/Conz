@@ -60,6 +60,10 @@ namespace Conz.UnitTests.Core {
                                                    new Segment("a", null)));
       yield return new TestCaseData("|||", BA<Segment>());
       yield return new TestCaseData("|||||||||", BA<Segment>());
+      yield return new TestCaseData("|", BA<Segment>());
+      yield return new TestCaseData("||", BA<Segment>());
+      yield return new TestCaseData("|a|", BA(new Segment("a", null)));
+      yield return new TestCaseData("|a|abc||", BA(new Segment("a", "abc")));
     }
 
     private Parser mParser;
