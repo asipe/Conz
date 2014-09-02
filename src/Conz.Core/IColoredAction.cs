@@ -3,6 +3,6 @@ using Conz.Core.ConsoleAbstraction;
 
 namespace Conz.Core {
   public interface IColoredAction {
-    void Execute(Action<IConsole> action);
+    void Execute(params Action<IConsole>[] actions);
   }
 }

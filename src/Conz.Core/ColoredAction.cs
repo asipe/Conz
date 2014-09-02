@@ -9,13 +9,13 @@ namespace Conz.Core {
       mCurrentClass = currentClass ?? Constants._EmptyClass;
     }
 
-    public void Execute(Action<IConsole> action) {
+    public void Execute(params Action<IConsole>[] actions) {
       var originalForegroundColor = mConsole.ForegroundColor;
       var originalBackgroundColor = mConsole.BackgroundColor;
       mConsole.ForegroundColor = GetCurrentColor(mCurrentClass.Color, mDefaultClass.Color, originalForegroundColor);
       mConsole.BackgroundColor = GetCurrentColor(mCurrentClass.BackgroundColor, mDefaultClass.BackgroundColor, originalBackgroundColor);
       try {
-        action.Invoke(mConsole);
+        Array.ForEach(actions, action => action.Invoke(mConsole));
       } finally {
         mConsole.ForegroundColor = originalForegroundColor;
         mConsole.BackgroundColor = originalBackgroundColor;

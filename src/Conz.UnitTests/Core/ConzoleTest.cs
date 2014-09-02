@@ -14,8 +14,8 @@ namespace Conz.UnitTests.Core {
         mConsole = console;
       }
 
-      public void Execute(Action<IConsole> action) {
-        action.Invoke(mConsole);
+      public void Execute(Action<IConsole>[] actions) {
+        Array.ForEach(actions, action => action.Invoke(mConsole));
       }
 
       private readonly IConsole mConsole;
@@ -34,6 +34,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write("Hello World"));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("Hello World");
@@ -70,13 +71,12 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello World"));
-      mConsole.Setup(c => c.Write(" "));
-      mConsole.Setup(c => c.Write("Goodbye"));
-      mConsole.Setup(c => c.Write("end"));
+      mExpectedWrites = new Queue<string>(BA("Hello World", " ", " ", "  ", "Goodbye", "   ", "end"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("|f1|Hello World||f3| ||f2|Goodbye|end");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -158,6 +158,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(true));
       mConzole.Write(true);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -168,6 +169,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write('a'));
       mConzole.Write('a');
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -178,6 +180,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(new[] {'a', 'b'}));
       mConzole.Write(new[] {'a', 'b'});
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -188,6 +191,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(1m));
       mConzole.Write(1m);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -198,6 +202,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(1.5));
       mConzole.Write(1.5);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -208,6 +213,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(1));
       mConzole.Write(1);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -218,6 +224,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(1L));
       mConzole.Write(1L);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -228,6 +235,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(1f));
       mConzole.Write(1f);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -238,6 +246,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write((uint)1));
       mConzole.Write((uint)1);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -248,6 +257,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write((ulong)1));
       mConzole.Write((ulong)1);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -259,6 +269,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(list));
       mConzole.Write(list);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -269,6 +280,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write(new[] {'a'}, 1, 2));
       mConzole.Write(new[] {'a'}, 1, 2);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -279,6 +291,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(true));
       mConzole.WriteLine(true);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -289,6 +302,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine('a'));
       mConzole.WriteLine('a');
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -300,6 +314,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write("Hello World"));
       mConzole.Write("Hello {0}", "World");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -315,10 +330,11 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello "));
-      mConsole.Setup(c => c.Write("World"));
+      mExpectedWrites = new Queue<string>(BA("   ", "Hello ", "World"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConzole.Write("Hello {0}", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(2));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -335,11 +351,11 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write(" "));
-      mConsole.Setup(c => c.Write("World"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", " ", "World"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConzole.Write("{0} {1}", "|f2|Hello|", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -356,11 +372,11 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write("-"));
-      mConsole.Setup(c => c.Write("World"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", "-", "World"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConzole.Write("{0}{1}{2}", "|f2|Hello|", "-", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -378,12 +394,11 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write("-"));
-      mConsole.Setup(c => c.Write("World"));
-      mConsole.Setup(c => c.Write("*"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", "-", "World", "   ", "*"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConzole.Write("{0}{1}{2}{3}", "|f2|Hello|", "-", "|f1|World|", "*");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -405,13 +420,11 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[2])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write("-"));
-      mConsole.Setup(c => c.Write("World"));
-      mConsole.Setup(c => c.Write("*"));
-      mConsole.Setup(c => c.Write("_"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", "-", "World", "   ", "*", " ", "_"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConzole.Write("{0}{1}{2}{3}{4}", "|f2|Hello|", "-", "|f1|World|", "*", "|f3|_|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(5));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -419,6 +432,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(new[] {'a', 'b'}));
       mConzole.WriteLine(new[] {'a', 'b'});
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -429,6 +443,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(1m));
       mConzole.WriteLine(1m);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -439,6 +454,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(1.5));
       mConzole.WriteLine(1.5);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -449,6 +465,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(1));
       mConzole.WriteLine(1);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -459,6 +476,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(1L));
       mConzole.WriteLine(1L);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -469,6 +487,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(1f));
       mConzole.WriteLine(1f);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -479,6 +498,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine((uint)1));
       mConzole.WriteLine((uint)1);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -489,6 +509,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine((ulong)1));
       mConzole.WriteLine((ulong)1);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -500,6 +521,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(list));
       mConzole.WriteLine(list);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -510,6 +532,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.WriteLine(new[] {'a'}, 1, 2));
       mConzole.WriteLine(new[] {'a'}, 1, 2);
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Once());
@@ -521,6 +544,7 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Default)))
         .Returns(mAction);
+      mConsole.Setup(c => c.Write("   "));
       mConsole.Setup(c => c.Write("Hello World"));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("Hello {0}", "World");
@@ -537,11 +561,12 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello "));
-      mConsole.Setup(c => c.Write("World"));
+      mExpectedWrites = new Queue<string>(BA("   ", "Hello ", "World"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("Hello {0}", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(2));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -558,12 +583,12 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write(" "));
-      mConsole.Setup(c => c.Write("World"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", " ", "World"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("{0} {1}", "|f2|Hello|", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -580,12 +605,12 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write("-"));
-      mConsole.Setup(c => c.Write("World"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", "-", "World"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("{0}{1}{2}", "|f2|Hello|", "-", "|f1|World|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(3));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -603,13 +628,12 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[0])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write("-"));
-      mConsole.Setup(c => c.Write("World"));
-      mConsole.Setup(c => c.Write("*"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", "-", "World", "   ", "*"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("{0}{1}{2}{3}", "|f2|Hello|", "-", "|f1|World|", "*");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(4));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [Test]
@@ -631,14 +655,12 @@ namespace Conz.UnitTests.Core {
       mFactory
         .Setup(f => f.Build(mConsole.Object, IsEq(mStyleSheet.Default), IsEq(mStyleSheet.Classes[2])))
         .Returns(mAction);
-      mConsole.Setup(c => c.Write("Hello"));
-      mConsole.Setup(c => c.Write("-"));
-      mConsole.Setup(c => c.Write("World"));
-      mConsole.Setup(c => c.Write("*"));
-      mConsole.Setup(c => c.Write("_"));
+      mExpectedWrites = new Queue<string>(BA("  ", "Hello", "   ", "-", "World", "   ", "*", " ", "_"));
+      mConsole.Setup(c => c.Write(It.Is<string>(s => IsValueNextExpected(s))));
       mConsole.Setup(c => c.WriteLine());
       mConzole.WriteLine("{0}{1}{2}{3}{4}", "|f2|Hello|", "-", "|f1|World|", "*", "|f3|_|");
       mFactory.Verify(f => f.Build(mConsole.Object, It.IsAny<Class>(), It.IsAny<Class>()), Times.Exactly(5));
+      Assert.That(mExpectedWrites, Is.Empty);
     }
 
     [SetUp]
@@ -646,12 +668,17 @@ namespace Conz.UnitTests.Core {
       mConsole = Mok<IConsole>();
       mParser = Mok<IParser>();
       mFactory = Mok<IColoredActionFactory>();
-      mStyleSheet = new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.White),
+      mStyleSheet = new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.White, 3),
                                    BA(new Class("f1", ConzoleColor.Blue, ConzoleColor.Black),
-                                      new Class("f2", ConzoleColor.Green, ConzoleColor.Red),
-                                      new Class("f3", ConzoleColor.DarkBlue, ConzoleColor.DarkCyan)));
+                                      new Class("f2", ConzoleColor.Green, ConzoleColor.Red, 2),
+                                      new Class("f3", ConzoleColor.DarkBlue, ConzoleColor.DarkCyan, 1)));
       mAction = new StubColoredAction(mConsole.Object);
       mConzole = new Conzole(mStyleSheet, mConsole.Object, mParser.Object, mFactory.Object);
+      mExpectedWrites = null;
+    }
+
+    private bool IsValueNextExpected(string value) {
+      return mExpectedWrites.Dequeue().Equals(value);
     }
 
     private Mock<IConsole> mConsole;
@@ -660,5 +687,6 @@ namespace Conz.UnitTests.Core {
     private Mock<IParser> mParser;
     private Mock<IColoredActionFactory> mFactory;
     private StubColoredAction mAction;
+    private Queue<string> mExpectedWrites;
   }
 }

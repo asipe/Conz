@@ -94,12 +94,12 @@ namespace Conz.Core {
 
     public void WriteLine(string format, object arg0) {
       Write(format, arg0);
-      WriteLine();
+      InternalWriteLine();
     }
 
     public void WriteLine(string format, params object[] arg) {
       Write(format, arg);
-      WriteLine();
+      InternalWriteLine();
     }
 
     public void WriteLine(char[] buffer, int index, int count) {
@@ -108,17 +108,17 @@ namespace Conz.Core {
 
     public void WriteLine(string format, object arg0, object arg1) {
       Write(format, arg0, arg1);
-      WriteLine();
+      InternalWriteLine();
     }
 
     public void WriteLine(string format, object arg0, object arg1, object arg2) {
       Write(format, arg0, arg1, arg2);
-      WriteLine();
+      InternalWriteLine();
     }
 
     public void WriteLine(string format, object arg0, object arg1, object arg2, object arg3) {
       Write(format, arg0, arg1, arg2, arg3);
-      WriteLine();
+      InternalWriteLine();
     }
 
     public void Write(bool value) {
@@ -209,14 +209,28 @@ namespace Conz.Core {
       mConsole.ResetColor();
     }
 
+    private void InternalWriteLine() {
+      mConsole.WriteLine();
+    }
+
     private void DoWork(Class @class, Action<IConsole> action) {
+      var actions = GetActions(@class, action);
       mFactory
         .Build(mConsole, mStyleSheet.Default, @class)
-        .Execute(action);
+        .Execute(actions);
     }
 
     private void DoWorkWithDefault(Action<IConsole> action) {
       DoWork(mStyleSheet.Default, action);
+    }
+
+    private static Action<IConsole>[] GetActions(Class @class, Action<IConsole> action) {
+      if (@class.Indent == 0)
+        return new[] {action};
+      return new[] {
+                     c => c.Write(new string(' ', @class.Indent)),
+                     action
+                   };
     }
 
     private readonly IConsole mConsole;
