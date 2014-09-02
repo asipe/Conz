@@ -20,9 +20,9 @@ namespace Conz.Core.Sample {
     }
 
     private static void DoFormatted() {
-      var conzole = new Conzole(new StyleSheet(new Class("default", ConsoleColor.Black, ConsoleColor.White),
-                                               new Class("error", ConsoleColor.Red, ConsoleColor.Black),
-                                               new Class("warning", ConsoleColor.Yellow, ConsoleColor.Red)));
+      var conzole = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Black, ConzoleColor.White),
+                                               new Class("error", ConzoleColor.Red, ConzoleColor.Black),
+                                               new Class("warning", ConzoleColor.Yellow, ConzoleColor.Red)));
       conzole.WriteLine("This is default");
       conzole.WriteLine("|error|This is error|");
       conzole.WriteLine("|warning|This is warning|");
@@ -32,8 +32,9 @@ namespace Conz.Core.Sample {
 
     private static void DoRainbow() {
       var colors = Enum
-        .GetValues(typeof(ConsoleColor))
-        .Cast<ConsoleColor>()
+        .GetValues(typeof(ConzoleColor))
+        .Cast<ConzoleColor>()
+        .Where(cc => cc != ConzoleColor.Default)
         .ToArray();
 
       var reversedColors = colors
