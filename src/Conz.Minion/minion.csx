@@ -92,7 +92,7 @@ void PushNugetPackages() {
   conzole.WriteLine("|y|Push Nuget Packages!!|");
   conzole.WriteLine("|y|Are You Sure?|  Enter YES to Continue");
   if (conzole.ReadLine() == "YES") {
-    Run(config["NugetExePath"], @"push .\nugetworking\Conz.Core\Conz.Core.0.0.0.4.nupkg");
+    Run(config["NugetExePath"], @"push .\nugetworking\Conz.Core\Conz.Core.0.0.0.5.nupkg");
   }
   else 
     conzole.WriteLine("|r|Operation Cancelled...|");
