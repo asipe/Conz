@@ -11,6 +11,18 @@ nuget package (Conz.Core): https://nuget.org/packages/Conz.Core/
 
 install via package manager: Install-Package Conz.Core
 
+### Features
+
+Conz uses the concept of a basic style sheet to format console output.  Conz has support for:
+* a default style which is used when no style is provided in the format
+* background and foreground coloring
+* indenting
+* definition of a custom format definition character
+
+Conz does not currently support
+* embedding style definitions more than a single level
+* encoding the format definition character so it can appear in the output
+
 ### Usage
 
 ```csharp
