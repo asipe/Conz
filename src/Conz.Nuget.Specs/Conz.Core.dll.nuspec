@@ -8,7 +8,7 @@
     <licenseUrl>https://github.com/asipe/Conz/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/asipe/Conz</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Console Utility Library</description>
+    <description>C# Micro Library which supports using a basic style sheet to format console output</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>utility console</tags>
