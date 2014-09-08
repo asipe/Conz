@@ -55,6 +55,10 @@ conz.WriteLine("^error^error style^ conzole defined using a custom format defini
 
 src\Samples contains some additional samples
 
+### Building
+
+Clone the Conz git repository into a local directory.  Start powershell and run build.ps1, this will install the necessary packages, build the project and run the unit tests.   You can also use the provided Visual Studio projects to build the assemblies.
+
 ### License
 
 Conz is licensed under the MIT license
