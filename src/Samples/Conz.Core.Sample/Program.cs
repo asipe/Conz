@@ -26,21 +26,31 @@ namespace Conz.Core.Sample {
     }
 
     private static void Basic() {
-      var conzole = new Conzole(new StyleSheet(new Class("default")));
-      conzole.WriteLine("This is a conzole configured with a default style sheet which uses the current Console default values");
-      conzole = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow)));
-      conzole.WriteLine("This is a conzole configured with a default style sheet which has a yellow background");
-      conzole = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black)));
-      conzole.WriteLine("This is a conzole configured with a default style sheet which has a yellow background and a black foreground");
-      conzole = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black, 5)));
-      conzole.WriteLine("This is a conzole configured with a default style sheet which has a yellow background and a black foreground and an indent of 5 spaces");
-      conzole = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+      var conz = new Conzole(new StyleSheet(new Class("default")));
+      conz.WriteLine("Default style sheet which uses the current Console default values");
+
+      conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow)));
+      conz.WriteLine("Default style sheet which has a yellow background");
+
+      conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black)));
+      conz.WriteLine("Default style sheet which has a yellow background and a black foreground");
+
+      conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black, 5)));
+      conz.WriteLine("Default style sheet which has a yellow background and a black foreground and an indent of 5 spaces");
+
+      conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
                                            new Class("error", ConzoleColor.Red)));
-      conzole.WriteLine("This is a conzole configured with a default style sheet which has a yellow background and a black foreground.  It also has an |error|error style| defined which has a red background");
-      conzole = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+      conz.WriteLine("|error|error style| defined which has a red background");
+
+      conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
                                            new Class("error", ConzoleColor.Red),
                                            new Class("notice", ConzoleColor.Default, ConzoleColor.DarkCyan)));
-      conzole.WriteLine("This is a conzole configured with a default style sheet which has a yellow background and a black foreground.  It also has an |notice|notice style| defined which has a cyan foreground");
+      conz.WriteLine("|notice|notice style| defined which has a cyan foreground");
+
+      conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+                                        new Class("error", ConzoleColor.Red)), 
+                                        '^');
+      conz.WriteLine("^error^error style^ conzole defined using a custom format definition character");
     }
 
     private static void MoreFormatting() {
