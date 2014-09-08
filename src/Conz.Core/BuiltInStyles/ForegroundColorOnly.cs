@@ -1,7 +1,7 @@
 ﻿namespace Conz.Core.BuiltInStyles {
   public static class ForegroundColorOnly {
     static ForegroundColorOnly() {
-      _Instance = new StyleSheet(null,
+      _Instance = new StyleSheet(new Class("default"),
                                  new Class("bl", ConzoleColor.Default, ConzoleColor.Black),
                                  new Class("db", ConzoleColor.Default, ConzoleColor.DarkBlue),
                                  new Class("dg", ConzoleColor.Default, ConzoleColor.DarkGreen),
