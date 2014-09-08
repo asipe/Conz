@@ -11,13 +11,49 @@ nuget package (Conz.Core): https://nuget.org/packages/Conz.Core/
 
 install via package manager: Install-Package Conz.Core
 
+### Features
+
+Conz uses the concept of a basic style sheet to format console output.  Conz has support for:
+* a default style which is used when no style is provided in the format
+* background and foreground coloring
+* indenting
+* definition of a custom format definition character
+
+Conz does not currently support
+* embedding style definitions more than a single level
+* encoding the format definition character so it can appear in the output
+
 ### Usage
 
 ```csharp
-//coming soon...
+var conz = new Conzole(new StyleSheet(new Class("default")));
+conz.WriteLine("Default style sheet which uses the current Console default values");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow)));
+conz.WriteLine("Default style sheet which has a yellow background");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black)));
+conz.WriteLine("Default style sheet which has a yellow background and a black foreground");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black, 5)));
+conz.WriteLine("Default style sheet which has a yellow background and a black foreground and an indent of 5 spaces");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+                                  new Class("error", ConzoleColor.Red)));
+conz.WriteLine("|error|error style| defined which has a red background");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+                                  new Class("error", ConzoleColor.Red),
+                                  new Class("notice", ConzoleColor.Default, ConzoleColor.DarkCyan)));
+conz.WriteLine("|notice|notice style| defined which has a cyan foreground");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+                                  new Class("error", ConzoleColor.Red)), 
+                                  '^');
+conz.WriteLine("^error^error style^ conzole defined using a custom format definition character");
 ```
 
-src\Samples contains some samples
+src\Samples contains some additional samples
 
 ### License
 
