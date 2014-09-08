@@ -46,6 +46,11 @@ conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, Conz
                                   new Class("error", ConzoleColor.Red),
                                   new Class("notice", ConzoleColor.Default, ConzoleColor.DarkCyan)));
 conz.WriteLine("|notice|notice style| defined which has a cyan foreground");
+
+conz = new Conzole(new StyleSheet(new Class("default", ConzoleColor.Yellow, ConzoleColor.Black),
+                                  new Class("error", ConzoleColor.Red)), 
+                                  '^');
+conz.WriteLine("^error^error style^ conzole defined using a custom format definition character");
 ```
 
 src\Samples contains some additional samples
