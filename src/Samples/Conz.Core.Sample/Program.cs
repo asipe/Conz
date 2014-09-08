@@ -51,6 +51,9 @@ namespace Conz.Core.Sample {
                                         new Class("error", ConzoleColor.Red)), 
                                         '^');
       conz.WriteLine("^error^error style^ conzole defined using a custom format definition character");
+
+      conz = new Conzole(BuiltInStyles.ForegroundColorOnly._Instance);
+      conz.WriteLine("Some |y|default| |g|styling|");
     }
 
     private static void MoreFormatting() {
